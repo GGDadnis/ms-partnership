@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUser, UserDomain>();
 builder.Services.AddScoped<ICompany, CompanyDomain>();
 builder.Services.AddScoped<IReview, ReviewDomain>();
+builder.Services.AddScoped<IPromo, PromoDomain>();
 
 // Add services to the container.
 // AddDbContext -> postgres  
