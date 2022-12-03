@@ -16,6 +16,7 @@ namespace ms_partnership.Data
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder Builder)
         {
@@ -23,6 +24,7 @@ namespace ms_partnership.Data
 
             Builder.Entity<User>();
             Builder.Entity<Company>();
+            Builder.Entity<Review>();
         }
     }
 }

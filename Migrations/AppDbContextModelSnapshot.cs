@@ -55,6 +55,30 @@ namespace mspartnership.Migrations
                     b.ToTable("company");
                 });
 
+            modelBuilder.Entity("ms_partnership.Models.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("BadGrade")
+                        .HasColumnType("boolean")
+                        .HasColumnName("bad_grade");
+
+                    b.Property<string>("Comentaries")
+                        .HasColumnType("text")
+                        .HasColumnName("comentaries");
+
+                    b.Property<bool>("GoodGrade")
+                        .HasColumnType("boolean")
+                        .HasColumnName("good_grade");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Review");
+                });
+
             modelBuilder.Entity("ms_partnership.Models.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")

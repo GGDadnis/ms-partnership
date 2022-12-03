@@ -27,6 +27,20 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Review",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    goodgrade = table.Column<bool>(name: "good_grade", type: "boolean", nullable: false),
+                    badgrade = table.Column<bool>(name: "bad_grade", type: "boolean", nullable: false),
+                    comentaries = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Review", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user",
                 columns: table => new
                 {
@@ -47,6 +61,9 @@ namespace mspartnership.Migrations
         {
             migrationBuilder.DropTable(
                 name: "company");
+
+            migrationBuilder.DropTable(
+                name: "Review");
 
             migrationBuilder.DropTable(
                 name: "user");
