@@ -27,6 +27,22 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "promo",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    discount = table.Column<double>(type: "double precision", nullable: false),
+                    condition = table.Column<bool>(type: "boolean", nullable: false),
+                    discountdescription = table.Column<string>(name: "discount_description", type: "text", nullable: true),
+                    startdate = table.Column<DateTime>(name: "start_date", type: "timestamp with time zone", nullable: true),
+                    enddate = table.Column<DateTime>(name: "end_date", type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_promo", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Review",
                 columns: table => new
                 {
@@ -61,6 +77,9 @@ namespace mspartnership.Migrations
         {
             migrationBuilder.DropTable(
                 name: "company");
+
+            migrationBuilder.DropTable(
+                name: "promo");
 
             migrationBuilder.DropTable(
                 name: "Review");

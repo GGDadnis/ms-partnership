@@ -55,6 +55,38 @@ namespace mspartnership.Migrations
                     b.ToTable("company");
                 });
 
+            modelBuilder.Entity("ms_partnership.Models.Entities.Promo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("Condition")
+                        .HasColumnType("boolean")
+                        .HasColumnName("condition");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("double precision")
+                        .HasColumnName("discount");
+
+                    b.Property<string>("DiscountDescription")
+                        .HasColumnType("text")
+                        .HasColumnName("discount_description");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("end_date");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("start_date");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("promo");
+                });
+
             modelBuilder.Entity("ms_partnership.Models.Entities.Review", b =>
                 {
                     b.Property<Guid>("Id")
