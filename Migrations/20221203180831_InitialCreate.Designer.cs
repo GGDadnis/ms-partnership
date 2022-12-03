@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221203160227_InitialCreate")]
+    [Migration("20221203180831_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -56,6 +56,30 @@ namespace mspartnership.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("company");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("BadGrade")
+                        .HasColumnType("boolean")
+                        .HasColumnName("bad_grade");
+
+                    b.Property<string>("Comentaries")
+                        .HasColumnType("text")
+                        .HasColumnName("comentaries");
+
+                    b.Property<bool>("GoodGrade")
+                        .HasColumnType("boolean")
+                        .HasColumnName("good_grade");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("ms_partnership.Models.Entities.User", b =>
