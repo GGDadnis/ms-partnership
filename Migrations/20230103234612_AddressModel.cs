@@ -6,11 +6,40 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace mspartnership.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddressModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "address",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    cep = table.Column<string>(type: "text", nullable: false),
+                    logradouro = table.Column<string>(type: "text", nullable: false),
+                    bairro = table.Column<string>(type: "text", nullable: false),
+                    localidade = table.Column<string>(type: "text", nullable: false),
+                    uf = table.Column<string>(type: "text", nullable: false),
+                    complemento = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_address", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "category",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_category", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "company",
                 columns: table => new
@@ -75,6 +104,12 @@ namespace mspartnership.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "address");
+
+            migrationBuilder.DropTable(
+                name: "category");
+
             migrationBuilder.DropTable(
                 name: "company");
 

@@ -18,6 +18,8 @@ namespace ms_partnership.Data
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Promo> Promos { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Address> Address { get; set; }
 
         protected override void OnModelCreating(ModelBuilder Builder)
         {
@@ -27,6 +29,9 @@ namespace ms_partnership.Data
             Builder.Entity<Company>();
             Builder.Entity<Review>();
             Builder.Entity<Promo>();
+            Builder.Entity<Category>();
+            Builder.Entity<Address>();
+
         }
     }
 }

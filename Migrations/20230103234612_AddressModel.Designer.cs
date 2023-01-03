@@ -12,8 +12,8 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221203190122_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230103234612_AddressModel")]
+    partial class AddressModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,65 @@ namespace mspartnership.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("bairro");
+
+                    b.Property<string>("Cep")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("cep");
+
+                    b.Property<string>("Complemento")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("complemento");
+
+                    b.Property<string>("Localidade")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("localidade");
+
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("logradouro");
+
+                    b.Property<string>("Uf")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("uf");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("address");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("category");
+                });
 
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
                 {
