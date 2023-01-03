@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace mspartnership.Migrations
 {
     /// <inheritdoc />
-    public partial class AddressAndCategory : Migration
+    public partial class AddressModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,8 +19,9 @@ namespace mspartnership.Migrations
                     cep = table.Column<string>(type: "text", nullable: false),
                     logradouro = table.Column<string>(type: "text", nullable: false),
                     bairro = table.Column<string>(type: "text", nullable: false),
-                    cidade = table.Column<string>(type: "text", nullable: false),
-                    uf = table.Column<string>(type: "text", nullable: false)
+                    localidade = table.Column<string>(type: "text", nullable: false),
+                    uf = table.Column<string>(type: "text", nullable: false),
+                    complemento = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

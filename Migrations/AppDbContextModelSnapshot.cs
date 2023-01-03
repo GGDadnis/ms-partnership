@@ -42,10 +42,15 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("cep");
 
-                    b.Property<string>("Cidade")
+                    b.Property<string>("Complemento")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("cidade");
+                        .HasColumnName("complemento");
+
+                    b.Property<string>("Localidade")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("localidade");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
