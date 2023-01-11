@@ -12,8 +12,8 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230103234612_AddressModel")]
-    partial class AddressModel
+    [Migration("20230111175641_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,6 @@ namespace mspartnership.Migrations
                         .HasColumnName("cep");
 
                     b.Property<string>("Complemento")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("complemento");
 

@@ -43,7 +43,6 @@ namespace mspartnership.Migrations
                         .HasColumnName("cep");
 
                     b.Property<string>("Complemento")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("complemento");
 
