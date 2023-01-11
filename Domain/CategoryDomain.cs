@@ -38,7 +38,12 @@ namespace ms_partnership.Domain
 
         public Result IdValidate(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                return Result.Fail("");
+            }
+            
+            return Result.Ok();
         }
 
         public bool Remove(Guid id)

@@ -14,6 +14,6 @@ namespace ms_partnership.Models.Entities.Dtos.Address
         public string Cep { get; set; }
 
         [Column("complemento")]
-        public string Complemento { get; set; }
+        public string? Complemento { get; set; }
     }
 }

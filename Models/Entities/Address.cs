@@ -37,7 +37,7 @@ namespace ms_partnership.Models.Entities
         public string Uf { get; set; }
 
         [Column("complemento")]
-        public string Complemento { get; set; }
+        public string? Complemento { get; set; }
 
 
     }

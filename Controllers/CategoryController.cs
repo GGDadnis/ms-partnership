@@ -13,68 +13,75 @@ namespace ms_partnership.Controllers
     [Route("[Controller]")]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategory _interface;
+        private readonly ICategory _interfaces;
 
         public CategoryController(ICategory interfaceCategory)
         {
-            _interface = interfaceCategory;
-        }
-
-        [HttpGet]
-        public IActionResult getAllCategorys()
-        {
-            IEnumerable<ReadCategoryDto> categorys = _interface.SearchAll();
-
-            return Ok(categorys);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult getCategoryById(Guid id)
-        {
-            ReadCategoryDto category = _interface.SearchById(id);
-
-            if (category != null)
-            {
-                return Ok(category);
-            }
-
-            return BadRequest("Category not found!");
-
+            _interfaces = interfaceCategory;
         }
 
         [HttpPost]
         public IActionResult createCategory(AddCategoryDto objCategory)
         {
+            var category = _interfaces.Add(objCategory);
+            if (category != null)
+            {
+                return Ok(category);
+            }
 
-            ReadCategoryDto category = _interface.Add(objCategory);
-
-            return Ok(category);
+            return BadRequest("Fail to create category");
         }
 
-        [HttpPut("{id}")]
-        public IActionResult updateCategory(Guid id, UpdateCategoryDto updatedCategory)
+        [HttpGet]
+        public IActionResult getAllCategories()
         {
-            ReadCategoryDto category = _interface.Update(id, updatedCategory);
+            var categories = _interfaces.SearchAll();
+            if (categories != null)
+            {
+                return Ok(categories);
+            }
+            return BadRequest("Fail to find categories");
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult getCategoryById(Guid id)
+        {
+            ReadCategoryDto category = _interfaces.SearchById(id);
 
             if (category != null)
             {
                 return Ok(category);
             }
 
-            return BadRequest("Fail! when updating category");
+            return BadRequest("Fail to find category");
+
+        }
+
+
+        [HttpPut("{id}")]
+        public IActionResult updateCategory(Guid id, UpdateCategoryDto updatedCategory)
+        {
+            ReadCategoryDto category = _interfaces.Update(id, updatedCategory);
+
+            if (category != null)
+            {
+                return Ok(category);
+            }
+
+            return BadRequest("Fail to update category");
         }
 
         [HttpDelete("{id}")]
         public IActionResult deleteCategory(Guid id)
         {
-            bool resultDelete = _interface.Remove(id);
+            bool resultDelete = _interfaces.Remove(id);
 
             if (resultDelete)
             {
                 return Ok("Category deleted!");
             }
 
-            return BadRequest("Fail! Ops something went wrong");
+            return BadRequest("Fail to delete category");
         }
     }
 }

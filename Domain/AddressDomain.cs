@@ -57,27 +57,51 @@ namespace ms_partnership.Domain
 
         public Result IdValidate(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                return Result.Fail("");
+            }
+            
+            return Result.Ok();
         }
 
         public bool Remove(Guid id)
         {
-            throw new NotImplementedException();
+            Address address = _context.Address.FirstOrDefault(address => address.Id == id);
+            if (address != null)
+            {
+                _context.Remove(address);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public IEnumerable<ReadAddressDto> SearchAll()
         {
-            throw new NotImplementedException();
+            var lista = _context.Address.ToList();
+            IEnumerable<ReadAddressDto> readAddressDtos = _mapper.Map<List<ReadAddressDto>>(lista);
+            return readAddressDtos;
         }
 
         public ReadAddressDto SearchById(Guid id)
         {
-            throw new NotImplementedException();
+            Address address = _context.Address.FirstOrDefault(address => address.Id == id);
+            ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
+            return addressDto;
         }
 
-        public ReadAddressDto Update(Guid id, UpdateAddressDto obj)
+        public ReadAddressDto Update(Guid id, UpdateAddressDto dto)
         {
-            throw new NotImplementedException();
+            Address address = _context.Address.FirstOrDefault(address => address.Id == id);
+            if(address != null)
+            {
+                _mapper.Map(dto, address);
+                ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
+                _context.SaveChanges();
+                return addressDto;
+            }
+            return null;
         }
     }
 }
