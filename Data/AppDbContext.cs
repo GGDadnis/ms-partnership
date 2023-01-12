@@ -37,6 +37,16 @@ namespace ms_partnership.Data
             // .HasRequired(login => login.AcessType)
             // .WithRequiredDependent(userRoles => userRoles.);
 
+            Builder.Entity<Promo>()
+            .Property<DateTime>("StartDate")
+            .HasColumnType("date")
+            .HasColumnName("start_date");
+
+            Builder.Entity<Promo>()
+            .Property<DateTime>("EndDate")
+            .HasColumnType("date")
+            .HasColumnName("end_date");
+
         }
     }
 }

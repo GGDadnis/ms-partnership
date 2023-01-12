@@ -17,9 +17,11 @@ namespace ms_partnership.Models.Entities.Dtos.Promo
         public string? DiscountDescription { get; set; }
 
         [Column("start_date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? StartDate { get; set; }
 
         [Column("end_date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
     }
 }
