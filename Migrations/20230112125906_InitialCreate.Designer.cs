@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230112100347_InitialCreate")]
+    [Migration("20230112125906_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
