@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ms_partnership.Auth
 {
+    [Keyless]
     public class UserRoles
     {
         public const string Admin = "Admin";

@@ -25,6 +25,6 @@ namespace ms_partnership.Models.Entities.Dtos.Login
 
         // [Column("acess_type")]
         // [Required(ErrorMessage = "User need to have an acess type")]
-        // public UserRoles? AcessType { get; set; }
+        // public virtual Auth.UserRoles AcessType { get; set; }
     }
 }

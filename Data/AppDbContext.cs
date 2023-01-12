@@ -31,8 +31,11 @@ namespace ms_partnership.Data
             Builder.Entity<Review>();
             Builder.Entity<Promo>();
             Builder.Entity<Category>();
-            Builder.Entity<Address>();
+            Builder.Entity<Address>();            
             Builder.Entity<Login>();
+            // .HasKey(login => login.Id)
+            // .HasRequired(login => login.AcessType)
+            // .WithRequiredDependent(userRoles => userRoles.);
 
         }
     }
