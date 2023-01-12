@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace ms_partnership.Models.Entities
 {
@@ -24,6 +21,7 @@ namespace ms_partnership.Models.Entities
 
         [Required]
         [Column("professional")]
+        [DefaultValue(false)]
         public Boolean Professional { get; set; } = false;
 
         // [Column("acess_type")]

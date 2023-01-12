@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace ms_partnership.Models.Entities.Dtos.Login
 
         [Required]
         [Column("professional")]
+        [DefaultValue(false)]
         public Boolean Professional { get; set; } = false;
 
         // [Column("acess_type")]
