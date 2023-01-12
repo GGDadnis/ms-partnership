@@ -12,6 +12,7 @@ builder.Services.AddScoped<IReview, ReviewDomain>();
 builder.Services.AddScoped<IPromo, PromoDomain>();
 builder.Services.AddScoped<IAddress, AddressDomain>();
 builder.Services.AddScoped<ICategory, CategoryDomain>();
+builder.Services.AddScoped<ILogin, LoginDomain>();
 
 
 // Add services to the container.

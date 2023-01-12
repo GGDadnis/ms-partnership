@@ -44,7 +44,7 @@ namespace ms_partnership.Domain
             {
                 Address address = _mapper.Map<Address>(responseCep);
 
-                _context.Address.Add(address);
+                _context.Addresses.Add(address);
                 _context.SaveChanges();
 
                 ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
@@ -67,7 +67,7 @@ namespace ms_partnership.Domain
 
         public bool Remove(Guid id)
         {
-            Address address = _context.Address.FirstOrDefault(address => address.Id == id);
+            Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
             if (address != null)
             {
                 _context.Remove(address);
@@ -79,21 +79,21 @@ namespace ms_partnership.Domain
 
         public IEnumerable<ReadAddressDto> SearchAll()
         {
-            var lista = _context.Address.ToList();
+            var lista = _context.Addresses.ToList();
             IEnumerable<ReadAddressDto> readAddressDtos = _mapper.Map<List<ReadAddressDto>>(lista);
             return readAddressDtos;
         }
 
         public ReadAddressDto SearchById(Guid id)
         {
-            Address address = _context.Address.FirstOrDefault(address => address.Id == id);
+            Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
             ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
             return addressDto;
         }
 
         public ReadAddressDto Update(Guid id, UpdateAddressDto dto)
         {
-            Address address = _context.Address.FirstOrDefault(address => address.Id == id);
+            Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
             if(address != null)
             {
                 _mapper.Map(dto, address);

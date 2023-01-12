@@ -113,6 +113,33 @@ namespace mspartnership.Migrations
                     b.ToTable("company");
                 });
 
+            modelBuilder.Entity("ms_partnership.Models.Entities.Login", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password");
+
+                    b.Property<bool>("Professional")
+                        .HasColumnType("boolean")
+                        .HasColumnName("professional");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("user_name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logins");
+                });
+
             modelBuilder.Entity("ms_partnership.Models.Entities.Promo", b =>
                 {
                     b.Property<Guid>("Id")

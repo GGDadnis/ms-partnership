@@ -56,6 +56,20 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Logins",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    username = table.Column<string>(name: "user_name", type: "character varying(50)", maxLength: 50, nullable: false),
+                    password = table.Column<string>(type: "text", nullable: false),
+                    professional = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logins", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "promo",
                 columns: table => new
                 {
@@ -112,6 +126,9 @@ namespace mspartnership.Migrations
 
             migrationBuilder.DropTable(
                 name: "company");
+
+            migrationBuilder.DropTable(
+                name: "Logins");
 
             migrationBuilder.DropTable(
                 name: "promo");

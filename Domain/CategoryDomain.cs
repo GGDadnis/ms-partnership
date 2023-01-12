@@ -48,7 +48,7 @@ namespace ms_partnership.Domain
 
         public bool Remove(Guid id)
         {
-            Category categoryObj = _context.Category.FirstOrDefault(category => category.Id == id);
+            Category categoryObj = _context.Categories.FirstOrDefault(category => category.Id == id);
 
             if (categoryObj != null)
             {
@@ -63,7 +63,7 @@ namespace ms_partnership.Domain
 
         public IEnumerable<ReadCategoryDto> SearchAll()
         {
-            List<Category> allCategorys = _context.Category.ToList();
+            List<Category> allCategorys = _context.Categories.ToList();
 
             List<ReadCategoryDto> categorysMapped = _mapper.Map<List<ReadCategoryDto>>(allCategorys);
 
@@ -72,7 +72,7 @@ namespace ms_partnership.Domain
 
         public ReadCategoryDto SearchById(Guid id)
         {
-            Category category = _context.Category.FirstOrDefault(category => category.Id == id);
+            Category category = _context.Categories.FirstOrDefault(category => category.Id == id);
 
             if (category != null)
             {
@@ -84,7 +84,7 @@ namespace ms_partnership.Domain
 
         public ReadCategoryDto Update(Guid id, UpdateCategoryDto obj)
         {
-            Category categoryDb = _context.Category.FirstOrDefault(category => category.Id == id);
+            Category categoryDb = _context.Categories.FirstOrDefault(category => category.Id == id);
 
             if (categoryDb != null)
             {
