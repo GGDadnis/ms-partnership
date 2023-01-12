@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230112185623_InitialCreate")]
+    [Migration("20230112192009_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -162,12 +162,12 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("discount_description");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("date")
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_date");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("date")
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_date");
 
                     b.HasKey("Id");
