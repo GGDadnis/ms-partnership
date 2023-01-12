@@ -17,7 +17,7 @@ namespace mspartnership.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -159,12 +159,12 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("discount_description");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date")
                         .HasColumnName("end_date");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date")
                         .HasColumnName("start_date");
 
                     b.HasKey("Id");
