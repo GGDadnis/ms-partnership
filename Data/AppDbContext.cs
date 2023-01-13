@@ -28,7 +28,17 @@ namespace ms_partnership.Data
 
             Builder.Entity<User>();
             Builder.Entity<Company>();
-            Builder.Entity<Review>();
+
+            Builder.Entity<Review>()
+            .HasOne(review => review.User)
+            .WithMany(user => user.Reviews)
+            .HasForeignKey(review => review.UserId);
+
+            Builder.Entity<Review>()
+            .HasOne(review => review.Company)
+            .WithMany(company => company.Reviews)
+            .HasForeignKey(review => review.CompanyId);
+
             Builder.Entity<Promo>();
             Builder.Entity<Category>();
             Builder.Entity<Address>();

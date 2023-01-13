@@ -204,11 +204,23 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("comentaries");
 
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
+
                     b.Property<bool>("GoodGrade")
                         .HasColumnType("boolean")
                         .HasColumnName("good_grade");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Review");
                 });
@@ -259,14 +271,33 @@ namespace mspartnership.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ms_partnership.Models.Entities.Review", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("ms_partnership.Models.Entities.User", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
                 {
                     b.Navigation("Logins");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("ms_partnership.Models.Entities.User", b =>
                 {
                     b.Navigation("Logins");
+
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

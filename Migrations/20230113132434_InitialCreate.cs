@@ -72,20 +72,6 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    goodgrade = table.Column<bool>(name: "good_grade", type: "boolean", nullable: false),
-                    badgrade = table.Column<bool>(name: "bad_grade", type: "boolean", nullable: false),
-                    comentaries = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Review", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "user",
                 columns: table => new
                 {
@@ -127,6 +113,32 @@ namespace mspartnership.Migrations
                         principalColumn: "id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Review",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    goodgrade = table.Column<bool>(name: "good_grade", type: "boolean", nullable: false),
+                    badgrade = table.Column<bool>(name: "bad_grade", type: "boolean", nullable: false),
+                    comentaries = table.Column<string>(type: "text", nullable: true),
+                    userid = table.Column<Guid>(name: "user_id", type: "uuid", nullable: true),
+                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Review", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Review_company_company_id",
+                        column: x => x.companyid,
+                        principalTable: "company",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_Review_user_user_id",
+                        column: x => x.userid,
+                        principalTable: "user",
+                        principalColumn: "id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Logins_company_id",
                 table: "Logins",
@@ -135,6 +147,16 @@ namespace mspartnership.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Logins_user_id",
                 table: "Logins",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_company_id",
+                table: "Review",
+                column: "company_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_user_id",
+                table: "Review",
                 column: "user_id");
         }
 

@@ -24,5 +24,6 @@ namespace ms_partnership.Models.Entities.Dtos.Company
         public double? TotalGrade { get; set; }
 
         public virtual List<Models.Entities.Login> Logins { get; set; }
+        public virtual List<Models.Entities.Review> Reviews { get; set; }
     }
 }

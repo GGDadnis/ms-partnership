@@ -27,5 +27,7 @@ namespace ms_partnership.Models.Entities
         public string? AvatarImg { get; set; }
 
         public virtual List<Login> Logins { get; set; }
+
+        public virtual List<Review> Reviews { get; set; }
     }
 }
