@@ -21,9 +21,9 @@ namespace ms_partnership.Controllers
         }
 
         [HttpPost]
-        public IActionResult createCategory(AddCategoryDto objCategory)
+        public IActionResult createCategory(AddCategoryDto dto)
         {
-            var category = _interfaces.Add(objCategory);
+            var category = _interfaces.Add(dto);
             if (category != null)
             {
                 return Ok(category);

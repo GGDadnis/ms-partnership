@@ -17,7 +17,6 @@ namespace ms_partnership.Models.Entities.Dtos.Address
         [Column("logradouro")]
         public string Logradouro { get; set; }
 
-
         [Required(ErrorMessage = "The Field Bairro is required")]
         [Column("bairro")]
         public string Bairro { get; set; }
