@@ -34,10 +34,15 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         public Boolean Professional { get; set; } = false;
 
         [Column("company_id")]
-        [DefaultValue(null)]
-        public Guid? CompanyId { get; set; } = null;
+        public Guid? CompanyId { get; set; }
 
         [JsonIgnore]
         public virtual Models.Entities.Company? Company { get; set; }
+
+        [Column("user_id")]
+        public Guid? UserId { get; set; }
+
+        [JsonIgnore]
+        public virtual Models.Entities.User? User { get; set; }
     }
 }

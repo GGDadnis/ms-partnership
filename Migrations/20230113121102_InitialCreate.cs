@@ -109,7 +109,8 @@ namespace mspartnership.Migrations
                     password = table.Column<string>(type: "text", nullable: false),
                     role = table.Column<string>(type: "text", nullable: false),
                     professional = table.Column<bool>(type: "boolean", nullable: false),
-                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: true)
+                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: true),
+                    userid = table.Column<Guid>(name: "user_id", type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,12 +120,22 @@ namespace mspartnership.Migrations
                         column: x => x.companyid,
                         principalTable: "company",
                         principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_Logins_user_user_id",
+                        column: x => x.userid,
+                        principalTable: "user",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Logins_company_id",
                 table: "Logins",
                 column: "company_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logins_user_id",
+                table: "Logins",
+                column: "user_id");
         }
 
         /// <inheritdoc />
@@ -146,10 +157,10 @@ namespace mspartnership.Migrations
                 name: "Review");
 
             migrationBuilder.DropTable(
-                name: "user");
+                name: "company");
 
             migrationBuilder.DropTable(
-                name: "company");
+                name: "user");
         }
     }
 }

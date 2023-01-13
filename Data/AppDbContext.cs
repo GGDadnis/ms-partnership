@@ -38,6 +38,11 @@ namespace ms_partnership.Data
             .WithMany(company => company.Logins)
             .HasForeignKey(login => login.CompanyId);
 
+            Builder.Entity<Login>()
+            .HasOne(login => login.User)
+            .WithMany(user => user.Logins)
+            .HasForeignKey(login => login.UserId);
+
             // Builder.Entity<Promo>()
             // .Property<DateTime>("StartDate")
             // .HasColumnType("date")

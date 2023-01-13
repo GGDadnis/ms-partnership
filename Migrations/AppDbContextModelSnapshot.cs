@@ -138,6 +138,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("role");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -147,6 +151,8 @@ namespace mspartnership.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Logins");
                 });
@@ -244,10 +250,21 @@ namespace mspartnership.Migrations
                         .WithMany("Logins")
                         .HasForeignKey("CompanyId");
 
+                    b.HasOne("ms_partnership.Models.Entities.User", "User")
+                        .WithMany("Logins")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Company");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
+                {
+                    b.Navigation("Logins");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.User", b =>
                 {
                     b.Navigation("Logins");
                 });
