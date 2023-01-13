@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ms_partnership.Auth;
 
 namespace ms_partnership.Controllers.Security
 {
@@ -17,20 +18,17 @@ namespace ms_partnership.Controllers.Security
 
         [HttpGet]
         [Route("test-user")]
-        [Authorize]
-        //[Authorize(Roles = UserRoles.User)]
+        [Authorize(Roles = UserRoles.User)]
         public string GetUser() => "User";
 
         [HttpGet]
         [Route("test-admin")]
-        [Authorize]
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         public string GetAdmin() => "Admin";
 
         [HttpGet]
         [Route("test-company")]
-        [Authorize]
-        //[Authorize(Roles = UserRoles.Company)]
+        [Authorize(Roles = UserRoles.Company)]
         public string GetCompany() => "Company";
 
     }

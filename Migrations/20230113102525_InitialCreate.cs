@@ -60,8 +60,9 @@ namespace mspartnership.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    username = table.Column<string>(name: "user_name", type: "character varying(50)", maxLength: 50, nullable: false),
+                    username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
+                    role = table.Column<string>(type: "text", nullable: false),
                     professional = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>

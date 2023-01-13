@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230112192009_InitialCreate")]
+    [Migration("20230113102525_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -132,11 +132,16 @@ namespace mspartnership.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("professional");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("role");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
-                        .HasColumnName("user_name");
+                        .HasColumnName("username");
 
                     b.HasKey("Id");
 

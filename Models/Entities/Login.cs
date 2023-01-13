@@ -11,7 +11,7 @@ namespace ms_partnership.Models.Entities
         [Column("id")]
         public Guid Id { get; set; }
 
-        [Column("user_name")]
+        [Column("username")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Username need to have betewen 2 and 50 characters")]
         public string Username { get; set; }
 
@@ -19,14 +19,12 @@ namespace ms_partnership.Models.Entities
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Column("role")]
+        public string Role { get; set; }
+
         [Required]
         [Column("professional")]
         [DefaultValue(false)]
         public Boolean Professional { get; set; } = false;
-
-        // [Column("acess_type")]
-        // [Required(ErrorMessage = "User need to have an acess type")]
-        // public virtual Auth.UserRoles AcessType { get; set; }
-
     }
 }

@@ -9,7 +9,7 @@ namespace ms_partnership.Models.Entities.Dtos.Login
 {
     public class UpdateLoginDto
     {
-        [Column("user_name")]
+        [Column("username")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Username need to have betewen 2 and 50 characters")]
         [Required(ErrorMessage = "Login need to have an username", AllowEmptyStrings = false)]
         public string Username { get; set; }
@@ -22,9 +22,5 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         [Required]
         [Column("professional")]
         public Boolean Professional { get; set; } = false;
-
-        // [Column("acess_type")]
-        // [Required(ErrorMessage = "User need to have an acess type")]
-        // public virtual Auth.UserRoles AcessType { get; set; }
     }
 }

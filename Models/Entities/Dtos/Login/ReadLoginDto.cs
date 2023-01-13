@@ -14,7 +14,7 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         [Column("id")]
         public Guid Id { get; set; }
 
-        [Column("user_name")]
+        [Column("username")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Username need to have betewen 2 and 50 characters")]
         [Required(ErrorMessage = "Login need to have an username", AllowEmptyStrings = false)]
         public string Username { get; set; }
@@ -24,13 +24,11 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         [Required(ErrorMessage = "Login need to have a password", AllowEmptyStrings = false)]
         public string Password { get; set; }
 
+        [Column("role")]
+        public string Role { get; set; }
+
         [Required]
         [Column("professional")]
         public Boolean Professional { get; set; } = false;
-
-        // [Column("acess_type")]
-        // [Required(ErrorMessage = "User need to have an acess type")]
-        // public virtual Auth.UserRoles AcessType { get; set; }
-
     }
 }

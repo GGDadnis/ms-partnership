@@ -67,6 +67,7 @@ namespace ms_partnership.Controllers.Security
                         new Claim("id", login.Id.ToString()),
                         new Claim("username", login.Username),
                         new Claim("password", login.Password),
+                        new Claim("role", login.Role),
                         new Claim("professional", login.Professional.ToString())
                         // new Claim("idCompany", login.IdCompany.ToString())
                     };
