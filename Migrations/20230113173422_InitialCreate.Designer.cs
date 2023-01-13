@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230113102525_InitialCreate")]
+    [Migration("20230113173422_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -45,6 +45,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("cep");
 
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
+
                     b.Property<string>("Complemento")
                         .HasColumnType("text")
                         .HasColumnName("complemento");
@@ -64,7 +68,16 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("uf");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("address");
                 });
@@ -93,6 +106,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("category_id");
+
                     b.Property<string>("Cnpj")
                         .IsRequired()
                         .HasColumnType("text")
@@ -113,6 +130,8 @@ namespace mspartnership.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("company");
                 });
 
@@ -122,6 +141,10 @@ namespace mspartnership.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -137,6 +160,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("role");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -144,6 +171,11 @@ namespace mspartnership.Migrations
                         .HasColumnName("username");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Logins");
                 });
@@ -154,6 +186,10 @@ namespace mspartnership.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
 
                     b.Property<bool>("Condition")
                         .HasColumnType("boolean")
@@ -167,15 +203,17 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("discount_description");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date")
                         .HasColumnName("end_date");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date")
                         .HasColumnName("start_date");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("promo");
                 });
@@ -195,11 +233,23 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("comentaries");
 
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
+
                     b.Property<bool>("GoodGrade")
                         .HasColumnType("boolean")
                         .HasColumnName("good_grade");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Review");
                 });
@@ -233,6 +283,100 @@ namespace mspartnership.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Address", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("ms_partnership.Models.Entities.User", "User")
+                        .WithOne("Address")
+                        .HasForeignKey("ms_partnership.Models.Entities.Address", "UserId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Category", "Category")
+                        .WithMany("Companies")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Login", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Logins")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("ms_partnership.Models.Entities.User", "User")
+                        .WithOne("Login")
+                        .HasForeignKey("ms_partnership.Models.Entities.Login", "UserId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Promo", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Promos")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Review", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("ms_partnership.Models.Entities.User", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Category", b =>
+                {
+                    b.Navigation("Companies");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Logins");
+
+                    b.Navigation("Promos");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.User", b =>
+                {
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Login")
+                        .IsRequired();
+
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

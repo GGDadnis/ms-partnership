@@ -1,5 +1,7 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ms_partnership.Models.Entities.Dtos.Review
 {
@@ -19,5 +21,16 @@ namespace ms_partnership.Models.Entities.Dtos.Review
 
         [Column("comentaries")]
         public string? Comentaries { get; set; }
+
+        [JsonIgnore]
+        public virtual Models.Entities.User? User { get; set; }
+
+        [Column("user_id")]
+        [DefaultValue(null)]
+        public Guid? UserId { get; set; } = null;
+
+        [Column("company_id")]
+        [DefaultValue(null)]
+        public Guid? CompanyId { get; set; } = null;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ms_partnership.Models.Entities
@@ -18,5 +19,8 @@ namespace ms_partnership.Models.Entities
         [Required]
         [Column("name")]
         public string Name { get; set; }
+
+        [JsonIgnore]
+        public virtual List<Company> Companies { get; set; }
     }
 }
