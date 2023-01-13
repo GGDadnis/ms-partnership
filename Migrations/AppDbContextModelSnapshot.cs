@@ -120,6 +120,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text")
@@ -141,6 +145,8 @@ namespace mspartnership.Migrations
                         .HasColumnName("username");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Logins");
                 });
@@ -230,6 +236,20 @@ namespace mspartnership.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Login", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Logins")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
+                {
+                    b.Navigation("Logins");
                 });
 #pragma warning restore 612, 618
         }

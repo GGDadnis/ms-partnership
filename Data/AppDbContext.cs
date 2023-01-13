@@ -31,11 +31,12 @@ namespace ms_partnership.Data
             Builder.Entity<Review>();
             Builder.Entity<Promo>();
             Builder.Entity<Category>();
-            Builder.Entity<Address>();            
-            Builder.Entity<Login>();
-            // .HasKey(login => login.Id)
-            // .HasRequired(login => login.AcessType)
-            // .WithRequiredDependent(userRoles => userRoles.);
+            Builder.Entity<Address>();
+
+            Builder.Entity<Login>()
+            .HasOne(login => login.Company)
+            .WithMany(company => company.Logins)
+            .HasForeignKey(login => login.CompanyId);
 
             // Builder.Entity<Promo>()
             // .Property<DateTime>("StartDate")

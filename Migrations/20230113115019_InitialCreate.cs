@@ -56,21 +56,6 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Logins",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    password = table.Column<string>(type: "text", nullable: false),
-                    role = table.Column<string>(type: "text", nullable: false),
-                    professional = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Logins", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "promo",
                 columns: table => new
                 {
@@ -114,6 +99,32 @@ namespace mspartnership.Migrations
                 {
                     table.PrimaryKey("PK_user", x => x.id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Logins",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    password = table.Column<string>(type: "text", nullable: false),
+                    role = table.Column<string>(type: "text", nullable: false),
+                    professional = table.Column<bool>(type: "boolean", nullable: false),
+                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logins", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Logins_company_company_id",
+                        column: x => x.companyid,
+                        principalTable: "company",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logins_company_id",
+                table: "Logins",
+                column: "company_id");
         }
 
         /// <inheritdoc />
@@ -126,9 +137,6 @@ namespace mspartnership.Migrations
                 name: "category");
 
             migrationBuilder.DropTable(
-                name: "company");
-
-            migrationBuilder.DropTable(
                 name: "Logins");
 
             migrationBuilder.DropTable(
@@ -139,6 +147,9 @@ namespace mspartnership.Migrations
 
             migrationBuilder.DropTable(
                 name: "user");
+
+            migrationBuilder.DropTable(
+                name: "company");
         }
     }
 }

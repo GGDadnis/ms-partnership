@@ -27,5 +27,9 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         [Column("professional")]
         [DefaultValue(false)]
         public Boolean Professional { get; set; } = false;
+
+        [Column("company_id")]
+        [DefaultValue(null)]
+        public Guid? CompanyId { get; set; } = null;
     }
 }

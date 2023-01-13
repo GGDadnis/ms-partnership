@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ms_partnership.Models.Entities.Dtos.Login
@@ -30,5 +32,12 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         [Required]
         [Column("professional")]
         public Boolean Professional { get; set; } = false;
+
+        [Column("company_id")]
+        [DefaultValue(null)]
+        public Guid? CompanyId { get; set; } = null;
+
+        [JsonIgnore]
+        public virtual Models.Entities.Company? Company { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace ms_partnership.Models.Entities
 {
@@ -26,5 +27,12 @@ namespace ms_partnership.Models.Entities
         [Column("professional")]
         [DefaultValue(false)]
         public Boolean Professional { get; set; } = false;
+
+        [Column("company_id")]
+        [DefaultValue(null)]
+        public Guid? CompanyId { get; set; } = null;
+
+        [JsonIgnore]
+        public virtual Company? Company { get; set; }
     }
 }

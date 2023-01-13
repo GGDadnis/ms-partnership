@@ -22,5 +22,7 @@ namespace ms_partnership.Models.Entities.Dtos.Company
 
         [Column("total_grade")]
         public double? TotalGrade { get; set; }
+
+        public virtual List<Models.Entities.Login> Logins { get; set; }
     }
 }
