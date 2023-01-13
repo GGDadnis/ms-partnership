@@ -38,11 +38,24 @@ namespace ms_partnership.Domain
         {
             ResponseViaCep responseCep = await _serviceCep.buscarCep(dto.Cep);
 
-            responseCep.Complemento = dto.Complemento;
+            // responseCep.Complemento = dto.Complemento;
 
             if (responseCep != null)
             {
-                Address address = _mapper.Map<Address>(responseCep);
+                // Address address = _mapper.Map<Address>(responseCep);
+
+                Address address = new Address()
+                {
+
+                    UserId = dto.UserId,
+                    CompanyId = dto.CompanyId,
+                    Logradouro = responseCep.Logradouro,
+                    Cep = responseCep.Cep,
+                    Localidade = responseCep.Localidade,
+                    Uf = responseCep.Uf,
+                    Bairro = responseCep.Bairro,
+                    Complemento = dto.Complemento,
+                };
 
                 _context.Addresses.Add(address);
                 _context.SaveChanges();
@@ -61,7 +74,7 @@ namespace ms_partnership.Domain
             {
                 return Result.Fail("");
             }
-            
+
             return Result.Ok();
         }
 
@@ -94,7 +107,7 @@ namespace ms_partnership.Domain
         public ReadAddressDto Update(Guid id, UpdateAddressDto dto)
         {
             Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
-            if(address != null)
+            if (address != null)
             {
                 _mapper.Map(dto, address);
                 ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
