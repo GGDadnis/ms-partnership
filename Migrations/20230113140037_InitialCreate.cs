@@ -41,21 +41,6 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "company",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    cnpj = table.Column<string>(type: "text", nullable: false),
-                    logoimg = table.Column<string>(name: "logo_img", type: "text", nullable: true),
-                    totalgrade = table.Column<double>(name: "total_grade", type: "double precision", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_company", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "promo",
                 columns: table => new
                 {
@@ -84,6 +69,28 @@ namespace mspartnership.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_user", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "company",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    cnpj = table.Column<string>(type: "text", nullable: false),
+                    logoimg = table.Column<string>(name: "logo_img", type: "text", nullable: true),
+                    totalgrade = table.Column<double>(name: "total_grade", type: "double precision", nullable: true),
+                    categoryid = table.Column<Guid>(name: "category_id", type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_company", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_company_category_category_id",
+                        column: x => x.categoryid,
+                        principalTable: "category",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -140,6 +147,11 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_company_category_id",
+                table: "company",
+                column: "category_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Logins_company_id",
                 table: "Logins",
                 column: "company_id");
@@ -167,9 +179,6 @@ namespace mspartnership.Migrations
                 name: "address");
 
             migrationBuilder.DropTable(
-                name: "category");
-
-            migrationBuilder.DropTable(
                 name: "Logins");
 
             migrationBuilder.DropTable(
@@ -183,6 +192,9 @@ namespace mspartnership.Migrations
 
             migrationBuilder.DropTable(
                 name: "user");
+
+            migrationBuilder.DropTable(
+                name: "category");
         }
     }
 }

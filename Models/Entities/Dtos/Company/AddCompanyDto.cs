@@ -18,5 +18,8 @@ namespace ms_partnership.Models.Entities.Dtos.Company
 
         [Column("total_grade")]
         public double? TotalGrade { get; set; }
+
+        [Column("category_id")]
+        public Guid CategoryId { get; set; }
     }
 }

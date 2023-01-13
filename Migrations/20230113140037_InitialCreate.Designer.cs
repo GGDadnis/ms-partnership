@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230113132434_InitialCreate")]
+    [Migration("20230113140037_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -93,6 +93,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("category_id");
+
                     b.Property<string>("Cnpj")
                         .IsRequired()
                         .HasColumnType("text")
@@ -112,6 +116,8 @@ namespace mspartnership.Migrations
                         .HasColumnName("total_grade");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("company");
                 });
@@ -259,6 +265,17 @@ namespace mspartnership.Migrations
                     b.ToTable("user");
                 });
 
+            modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Category", "Category")
+                        .WithMany("Companies")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("ms_partnership.Models.Entities.Login", b =>
                 {
                     b.HasOne("ms_partnership.Models.Entities.Company", "Company")
@@ -287,6 +304,11 @@ namespace mspartnership.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ms_partnership.Models.Entities.Category", b =>
+                {
+                    b.Navigation("Companies");
                 });
 
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>

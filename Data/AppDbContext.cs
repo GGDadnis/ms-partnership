@@ -26,8 +26,25 @@ namespace ms_partnership.Data
         {
             base.OnModelCreating(Builder);
 
-            Builder.Entity<User>();
-            Builder.Entity<Company>();
+            Builder.Entity<Address>();
+            Builder.Entity<Category>();
+
+            Builder.Entity<Company>()
+            .HasOne(company => company.Category)
+            .WithMany(category => category.Companies)
+            .HasForeignKey(company => company.CategoryId);
+
+            Builder.Entity<Login>()
+            .HasOne(login => login.Company)
+            .WithMany(company => company.Logins)
+            .HasForeignKey(login => login.CompanyId);
+
+            Builder.Entity<Login>()
+            .HasOne(login => login.User)
+            .WithMany(user => user.Logins)
+            .HasForeignKey(login => login.UserId);
+
+            Builder.Entity<Promo>();  
 
             Builder.Entity<Review>()
             .HasOne(review => review.User)
@@ -39,19 +56,7 @@ namespace ms_partnership.Data
             .WithMany(company => company.Reviews)
             .HasForeignKey(review => review.CompanyId);
 
-            Builder.Entity<Promo>();
-            Builder.Entity<Category>();
-            Builder.Entity<Address>();
-
-            Builder.Entity<Login>()
-            .HasOne(login => login.Company)
-            .WithMany(company => company.Logins)
-            .HasForeignKey(login => login.CompanyId);
-
-            Builder.Entity<Login>()
-            .HasOne(login => login.User)
-            .WithMany(user => user.Logins)
-            .HasForeignKey(login => login.UserId);
+            Builder.Entity<User>();
 
             // Builder.Entity<Promo>()
             // .Property<DateTime>("StartDate")
