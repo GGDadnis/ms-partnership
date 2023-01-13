@@ -36,7 +36,13 @@ namespace ms_partnership.Models.Entities.Dtos.Address
         [DefaultValue(null)]
         public Guid? CompanyId { get; set; } = null;
 
+        [Column("user_id")]
+        public Guid? UserId { get; set; }
+
         [JsonIgnore]
         public virtual Models.Entities.Company? Company { get; set; }
+
+        [JsonIgnore]
+        public virtual Models.Entities.User? User { get; set; }
     }
 }

@@ -65,9 +65,16 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("uf");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("address");
                 });
@@ -281,7 +288,13 @@ namespace mspartnership.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("CompanyId");
 
+                    b.HasOne("ms_partnership.Models.Entities.User", "User")
+                        .WithOne("Address")
+                        .HasForeignKey("ms_partnership.Models.Entities.Address", "UserId");
+
                     b.Navigation("Company");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
@@ -354,6 +367,9 @@ namespace mspartnership.Migrations
 
             modelBuilder.Entity("ms_partnership.Models.Entities.User", b =>
                 {
+                    b.Navigation("Address")
+                        .IsRequired();
+
                     b.Navigation("Login")
                         .IsRequired();
 

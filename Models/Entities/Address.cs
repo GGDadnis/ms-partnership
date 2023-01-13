@@ -48,6 +48,14 @@ namespace ms_partnership.Models.Entities
         [JsonIgnore]
         public virtual Company? Company { get; set; }
 
+        [ForeignKey("User")]
+        [Column("user_id")]
+        [DefaultValue(null)]
+        public Guid? UserId { get; set; } = null;
+
+        [JsonIgnore]
+        public virtual User? User { get; set; }
+
 
     }
 }

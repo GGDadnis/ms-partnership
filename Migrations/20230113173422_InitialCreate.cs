@@ -71,7 +71,8 @@ namespace mspartnership.Migrations
                     localidade = table.Column<string>(type: "text", nullable: false),
                     uf = table.Column<string>(type: "text", nullable: false),
                     complemento = table.Column<string>(type: "text", nullable: true),
-                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: true)
+                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: true),
+                    userid = table.Column<Guid>(name: "user_id", type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,6 +81,11 @@ namespace mspartnership.Migrations
                         name: "FK_address_company_company_id",
                         column: x => x.companyid,
                         principalTable: "company",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_address_user_user_id",
+                        column: x => x.userid,
+                        principalTable: "user",
                         principalColumn: "id");
                 });
 
@@ -163,6 +169,12 @@ namespace mspartnership.Migrations
                 name: "IX_address_company_id",
                 table: "address",
                 column: "company_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_address_user_id",
+                table: "address",
+                column: "user_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_company_category_id",
