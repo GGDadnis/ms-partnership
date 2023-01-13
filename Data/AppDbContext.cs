@@ -44,7 +44,10 @@ namespace ms_partnership.Data
             .WithMany(user => user.Logins)
             .HasForeignKey(login => login.UserId);
 
-            Builder.Entity<Promo>();  
+            Builder.Entity<Promo>()
+            .HasOne(promo => promo.Company)
+            .WithMany(category => category.Promos)
+            .HasForeignKey(promo => promo.CompanyId);
 
             Builder.Entity<Review>()
             .HasOne(review => review.User)
@@ -58,15 +61,15 @@ namespace ms_partnership.Data
 
             Builder.Entity<User>();
 
-            // Builder.Entity<Promo>()
-            // .Property<DateTime>("StartDate")
-            // .HasColumnType("date")
-            // .HasColumnName("start_date");
+            Builder.Entity<Promo>()
+            .Property<DateTime>("StartDate")
+            .HasColumnType("date")
+            .HasColumnName("start_date");
 
-            // Builder.Entity<Promo>()
-            // .Property<DateTime>("EndDate")
-            // .HasColumnType("date")
-            // .HasColumnName("end_date");
+            Builder.Entity<Promo>()
+            .Property<DateTime>("EndDate")
+            .HasColumnType("date")
+            .HasColumnName("end_date");
 
         }
     }

@@ -41,22 +41,6 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "promo",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    discount = table.Column<double>(type: "double precision", nullable: false),
-                    condition = table.Column<bool>(type: "boolean", nullable: false),
-                    discountdescription = table.Column<string>(name: "discount_description", type: "text", nullable: true),
-                    startdate = table.Column<DateTime>(name: "start_date", type: "timestamp with time zone", nullable: true),
-                    enddate = table.Column<DateTime>(name: "end_date", type: "timestamp with time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_promo", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "user",
                 columns: table => new
                 {
@@ -121,6 +105,29 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "promo",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    discount = table.Column<double>(type: "double precision", nullable: false),
+                    condition = table.Column<bool>(type: "boolean", nullable: false),
+                    discountdescription = table.Column<string>(name: "discount_description", type: "text", nullable: true),
+                    startdate = table.Column<DateTime>(name: "start_date", type: "date", nullable: false),
+                    enddate = table.Column<DateTime>(name: "end_date", type: "date", nullable: false),
+                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_promo", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_promo_company_company_id",
+                        column: x => x.companyid,
+                        principalTable: "company",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Review",
                 columns: table => new
                 {
@@ -160,6 +167,11 @@ namespace mspartnership.Migrations
                 name: "IX_Logins_user_id",
                 table: "Logins",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_promo_company_id",
+                table: "promo",
+                column: "company_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Review_company_id",

@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230113140037_InitialCreate")]
+    [Migration("20230113142043_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -173,6 +173,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
+
                     b.Property<bool>("Condition")
                         .HasColumnType("boolean")
                         .HasColumnName("condition");
@@ -185,15 +189,17 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("discount_description");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date")
                         .HasColumnName("end_date");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date")
                         .HasColumnName("start_date");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("promo");
                 });
@@ -291,6 +297,17 @@ namespace mspartnership.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ms_partnership.Models.Entities.Promo", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Promos")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("ms_partnership.Models.Entities.Review", b =>
                 {
                     b.HasOne("ms_partnership.Models.Entities.Company", "Company")
@@ -314,6 +331,8 @@ namespace mspartnership.Migrations
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
                 {
                     b.Navigation("Logins");
+
+                    b.Navigation("Promos");
 
                     b.Navigation("Reviews");
                 });

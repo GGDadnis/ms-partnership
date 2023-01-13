@@ -22,10 +22,13 @@ namespace ms_partnership.Models.Entities.Dtos.Promo
 
         [Column("start_date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Column("end_date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? EndDate { get; set; }
+        public DateTime EndDate { get; set; }
+
+        [Column("company_id")]
+        public Guid CompanyId { get; set; }
     }
 }
