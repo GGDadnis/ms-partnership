@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ms_partnership.Models.Entities
@@ -38,6 +40,13 @@ namespace ms_partnership.Models.Entities
 
         [Column("complemento")]
         public string? Complemento { get; set; }
+
+        [Column("company_id")]
+        [DefaultValue(null)]
+        public Guid? CompanyId { get; set; } = null;
+
+        [JsonIgnore]
+        public virtual Company? Company { get; set; }
 
 
     }

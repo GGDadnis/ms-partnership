@@ -26,7 +26,11 @@ namespace ms_partnership.Data
         {
             base.OnModelCreating(Builder);
 
-            Builder.Entity<Address>();
+            Builder.Entity<Address>()
+            .HasOne(address => address.Company)
+            .WithMany(company => company.Addresses)
+            .HasForeignKey(address => address.CompanyId);
+
             Builder.Entity<Category>();
 
             Builder.Entity<Company>()
@@ -39,14 +43,9 @@ namespace ms_partnership.Data
             .WithMany(company => company.Logins)
             .HasForeignKey(login => login.CompanyId);
 
-            Builder.Entity<Login>()
-            .HasOne(login => login.User)
-            .WithMany(user => user.Logins)
-            .HasForeignKey(login => login.UserId);
-
             Builder.Entity<Promo>()
             .HasOne(promo => promo.Company)
-            .WithMany(category => category.Promos)
+            .WithMany(company => company.Promos)
             .HasForeignKey(promo => promo.CompanyId);
 
             Builder.Entity<Review>()

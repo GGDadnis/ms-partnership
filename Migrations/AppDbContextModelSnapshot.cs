@@ -42,6 +42,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("text")
                         .HasColumnName("cep");
 
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_id");
+
                     b.Property<string>("Complemento")
                         .HasColumnType("text")
                         .HasColumnName("complemento");
@@ -62,6 +66,8 @@ namespace mspartnership.Migrations
                         .HasColumnName("uf");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("address");
                 });
@@ -158,7 +164,8 @@ namespace mspartnership.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Logins");
                 });
@@ -268,6 +275,15 @@ namespace mspartnership.Migrations
                     b.ToTable("user");
                 });
 
+            modelBuilder.Entity("ms_partnership.Models.Entities.Address", b =>
+                {
+                    b.HasOne("ms_partnership.Models.Entities.Company", "Company")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
                 {
                     b.HasOne("ms_partnership.Models.Entities.Category", "Category")
@@ -286,8 +302,8 @@ namespace mspartnership.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.HasOne("ms_partnership.Models.Entities.User", "User")
-                        .WithMany("Logins")
-                        .HasForeignKey("UserId");
+                        .WithOne("Login")
+                        .HasForeignKey("ms_partnership.Models.Entities.Login", "UserId");
 
                     b.Navigation("Company");
 
@@ -327,6 +343,8 @@ namespace mspartnership.Migrations
 
             modelBuilder.Entity("ms_partnership.Models.Entities.Company", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Logins");
 
                     b.Navigation("Promos");
@@ -336,7 +354,8 @@ namespace mspartnership.Migrations
 
             modelBuilder.Entity("ms_partnership.Models.Entities.User", b =>
                 {
-                    b.Navigation("Logins");
+                    b.Navigation("Login")
+                        .IsRequired();
 
                     b.Navigation("Reviews");
                 });

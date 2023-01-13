@@ -12,23 +12,6 @@ namespace mspartnership.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "address",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    cep = table.Column<string>(type: "text", nullable: false),
-                    logradouro = table.Column<string>(type: "text", nullable: false),
-                    bairro = table.Column<string>(type: "text", nullable: false),
-                    localidade = table.Column<string>(type: "text", nullable: false),
-                    uf = table.Column<string>(type: "text", nullable: false),
-                    complemento = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_address", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "category",
                 columns: table => new
                 {
@@ -75,6 +58,29 @@ namespace mspartnership.Migrations
                         principalTable: "category",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "address",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    cep = table.Column<string>(type: "text", nullable: false),
+                    logradouro = table.Column<string>(type: "text", nullable: false),
+                    bairro = table.Column<string>(type: "text", nullable: false),
+                    localidade = table.Column<string>(type: "text", nullable: false),
+                    uf = table.Column<string>(type: "text", nullable: false),
+                    complemento = table.Column<string>(type: "text", nullable: true),
+                    companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_address", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_address_company_company_id",
+                        column: x => x.companyid,
+                        principalTable: "company",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -154,6 +160,11 @@ namespace mspartnership.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_address_company_id",
+                table: "address",
+                column: "company_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_company_category_id",
                 table: "company",
                 column: "category_id");
@@ -166,7 +177,8 @@ namespace mspartnership.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Logins_user_id",
                 table: "Logins",
-                column: "user_id");
+                column: "user_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_promo_company_id",

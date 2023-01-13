@@ -24,7 +24,7 @@ namespace ms_partnership.Models.Entities.Dtos.User
         [Column("avatar_img")]
         public string? AvatarImg { get; set; }
 
-        public virtual List<Models.Entities.Login> Logins { get; set; }
+        public virtual Models.Entities.Login Login { get; set; }
         public virtual List<Models.Entities.Review> Reviews { get; set; }
     }
 }

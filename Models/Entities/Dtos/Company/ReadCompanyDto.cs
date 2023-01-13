@@ -25,6 +25,7 @@ namespace ms_partnership.Models.Entities.Dtos.Company
         public double? TotalGrade { get; set; }
 
         public virtual Models.Entities.Category? Category { get; set; }
+        public virtual List<Models.Entities.Address>? Addresses { get; set; }
         public virtual List<Models.Entities.Login>? Logins { get; set; }
         public virtual List<Models.Entities.Promo>? Promos { get; set; }
         public virtual List<Models.Entities.Review>? Reviews { get; set; }
