@@ -60,15 +60,15 @@ namespace ms_partnership.Data
 
             Builder.Entity<User>();
 
-            Builder.Entity<Promo>()
-            .Property<DateTime>("StartDate")
-            .HasColumnType("date")
-            .HasColumnName("start_date");
+            // Builder.Entity<Promo>()
+            // .Property<DateTime>("StartDate")
+            // .HasColumnType("date")
+            // .HasColumnName("start_date");
 
-            Builder.Entity<Promo>()
-            .Property<DateTime>("EndDate")
-            .HasColumnType("date")
-            .HasColumnName("end_date");
+            // Builder.Entity<Promo>()
+            // .Property<DateTime>("EndDate")
+            // .HasColumnType("date")
+            // .HasColumnName("end_date");
 
         }
     }

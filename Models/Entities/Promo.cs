@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -25,11 +26,13 @@ namespace ms_partnership.Models.Entities
 
         [Column("start_date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime StartDate { get; set; }
+        [DefaultValue(null)]
+        public DateTime? StartDate { get; set; } = null;
 
         [Column("end_date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime EndDate { get; set; }
+        [DefaultValue(null)]
+        public DateTime? EndDate { get; set; } = null;
 
         [Column("company_id")]
         public Guid CompanyId { get; set; }

@@ -10,10 +10,10 @@ namespace ms_partnership.Models.Entities.Dtos.Login
 {
     public class AddLoginDto
     {
-        [Column("username")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Username need to have betewen 2 and 50 characters")]
-        [Required(ErrorMessage = "Login need to have an username", AllowEmptyStrings = false)]
-        public string Username { get; set; }
+        [Column("email")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Email need to have betewen 2 and 50 characters")]
+        [Required(ErrorMessage = "Login need to have an valid email", AllowEmptyStrings = false)]
+        public string Email { get; set; }
 
         [Column("password")]
         [DataType(DataType.Password)]
