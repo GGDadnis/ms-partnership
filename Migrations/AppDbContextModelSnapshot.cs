@@ -81,7 +81,7 @@ namespace mspartnership.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("197a97a5-552e-451c-8082-60cf20b43646"),
+                            Id = new Guid("7d4bae16-5496-43f3-84df-09a606c5f181"),
                             Bairro = "Boa Vista de São Caetano",
                             Cep = "40385640",
                             Complemento = "",
@@ -92,7 +92,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9061f159-a07a-420b-b5c4-3e3cd03af4d8"),
+                            Id = new Guid("19699783-f19e-4573-bb2e-9f27b62b2c00"),
                             Bairro = "Santo Antônio I",
                             Cep = "35430505",
                             Complemento = "",
@@ -103,7 +103,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b1216360-c914-460a-b0db-bbdbe69b99cf"),
+                            Id = new Guid("b1be77d7-5bce-473a-b7e5-8ba31261fba2"),
                             Bairro = "Mooca",
                             Cep = "03162160",
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
@@ -114,7 +114,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0af6a86c-e2ed-4746-b114-cd83dcee74be"),
+                            Id = new Guid("e6fde535-9be1-4d88-9ac1-b7b06fc48dfa"),
                             Bairro = "Centro",
                             Cep = "20080020",
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
@@ -125,7 +125,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("eed5c4c8-81c3-4c73-81e5-c386707d3f14"),
+                            Id = new Guid("aba02984-19fe-42a2-8169-60e72a72d2eb"),
                             Bairro = "Diagon Alley",
                             Cep = "North Side",
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
@@ -136,7 +136,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4e23e6ab-7308-4c5b-82db-cb66b830d0e5"),
+                            Id = new Guid("2ab8ff0a-4998-42cc-b516-9c89ac323de6"),
                             Bairro = "Diagon Alley",
                             Cep = "North Side",
                             CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"),
@@ -438,7 +438,7 @@ namespace mspartnership.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dac01689-8db3-4bc1-b749-f678e5a5fef9"),
+                            Id = new Guid("2a961b5f-3bd9-4f9e-a18f-23a24da85615"),
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
                             Condition = false,
                             Discount = 0.0,
@@ -446,26 +446,26 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9ae22ea9-c082-47ab-994d-3091dada66a4"),
+                            Id = new Guid("2354ed4d-d1c1-407e-8490-d8bac8353db5"),
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
                             Condition = true,
                             Discount = 50.0,
                             DiscountDescription = "HOT DEAL: Firebolt at 50% OFF",
-                            EndDate = new DateTime(2023, 1, 19, 13, 58, 38, 871, DateTimeKind.Utc).AddTicks(4991),
-                            StartDate = new DateTime(2023, 1, 14, 13, 58, 38, 871, DateTimeKind.Utc).AddTicks(4989)
+                            EndDate = new DateTime(2023, 1, 19, 14, 8, 37, 703, DateTimeKind.Utc).AddTicks(6923),
+                            StartDate = new DateTime(2023, 1, 14, 14, 8, 37, 703, DateTimeKind.Utc).AddTicks(6921)
                         },
                         new
                         {
-                            Id = new Guid("e1dacf21-6caa-4779-9eb5-3f01bc88da94"),
+                            Id = new Guid("4fbae6b6-de2d-4b3d-8aa0-a445ca5c7a2e"),
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
                             Condition = false,
                             Discount = 10.0,
                             DiscountDescription = "Everything with 10% OFF",
-                            StartDate = new DateTime(2023, 1, 19, 13, 58, 38, 871, DateTimeKind.Utc).AddTicks(4999)
+                            StartDate = new DateTime(2023, 1, 19, 14, 8, 37, 703, DateTimeKind.Utc).AddTicks(6932)
                         },
                         new
                         {
-                            Id = new Guid("e504f16f-de67-4d7f-90b0-2b604baa6010"),
+                            Id = new Guid("f25d0adc-b02e-4bba-b74f-59308eb613d7"),
                             CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"),
                             Condition = true,
                             Discount = 30.0,

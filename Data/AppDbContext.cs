@@ -104,18 +104,18 @@ namespace ms_partnership.Data
                 new Login { Id = new Guid("854e1b60-d6ed-45f6-92cc-12b9880e57db"), Email = "ronweasley@diagonalley.com", Password = "123", Role = "Company", Professional = true, CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
 
             Builder.Entity<Address>().HasData(
-                new Address { Id = new Guid("197a97a5-552e-451c-8082-60cf20b43646"), Cep = "40385640", Logradouro = "Rua José Tibério", Bairro = "Boa Vista de São Caetano", Localidade = "Salvador", Uf = "BA", Complemento = "", UserId = new Guid("5e30cb9e-5e09-4d8c-84b6-33a4effb46bc")},
-                new Address { Id = new Guid("9061f159-a07a-420b-b5c4-3e3cd03af4d8"), Cep = "35430505", Logradouro = "Rua Rio Doce", Bairro = "Santo Antônio I", Localidade = "Ponte Nova", Uf = "MG", Complemento = "", UserId = new Guid("0ae4a7a5-5314-4312-ba10-e074d32ed6b9")},
-                new Address { Id = new Guid("b1216360-c914-460a-b0db-bbdbe69b99cf"), Cep = "03162160", Logradouro = "Rua Tagi", Bairro = "Mooca", Localidade = "São Paulo", Uf = "SP", Complemento = "", CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
-                new Address { Id = new Guid("0af6a86c-e2ed-4746-b114-cd83dcee74be"), Cep = "20080020", Logradouro = "Rua dos Andradas", Bairro = "Centro", Localidade = "Rio de Janeiro", Uf = "RJ", Complemento = "", CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
-                new Address { Id = new Guid("eed5c4c8-81c3-4c73-81e5-c386707d3f14"), Cep = "North Side", Logradouro = "Charing Cross Road", Bairro = "Diagon Alley", Localidade = "London", Uf = "LO", Complemento = "", CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
-                new Address { Id = new Guid("4e23e6ab-7308-4c5b-82db-cb66b830d0e5"), Cep = "North Side", Logradouro = "Charing Cross Road", Bairro = "Diagon Alley", Localidade = "London", Uf = "LO", Complemento = "93, Giant sir with hat at entrance", CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
+                new Address { Id = Guid.NewGuid(), Cep = "40385640", Logradouro = "Rua José Tibério", Bairro = "Boa Vista de São Caetano", Localidade = "Salvador", Uf = "BA", Complemento = "", UserId = new Guid("5e30cb9e-5e09-4d8c-84b6-33a4effb46bc")},
+                new Address { Id = Guid.NewGuid(), Cep = "35430505", Logradouro = "Rua Rio Doce", Bairro = "Santo Antônio I", Localidade = "Ponte Nova", Uf = "MG", Complemento = "", UserId = new Guid("0ae4a7a5-5314-4312-ba10-e074d32ed6b9")},
+                new Address { Id = Guid.NewGuid(), Cep = "03162160", Logradouro = "Rua Tagi", Bairro = "Mooca", Localidade = "São Paulo", Uf = "SP", Complemento = "", CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
+                new Address { Id = Guid.NewGuid(), Cep = "20080020", Logradouro = "Rua dos Andradas", Bairro = "Centro", Localidade = "Rio de Janeiro", Uf = "RJ", Complemento = "", CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
+                new Address { Id = Guid.NewGuid(), Cep = "North Side", Logradouro = "Charing Cross Road", Bairro = "Diagon Alley", Localidade = "London", Uf = "LO", Complemento = "", CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
+                new Address { Id = Guid.NewGuid(), Cep = "North Side", Logradouro = "Charing Cross Road", Bairro = "Diagon Alley", Localidade = "London", Uf = "LO", Complemento = "93, Giant sir with hat at entrance", CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
         
             Builder.Entity<Promo>().HasData(
-                new Promo { Id = new Guid("dac01689-8db3-4bc1-b749-f678e5a5fef9"), Discount = 0, Condition = false, DiscountDescription = "We're to good to give discount", CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
-                new Promo { Id = new Guid("9ae22ea9-c082-47ab-994d-3091dada66a4"), Discount = 50, Condition = true, DiscountDescription = "HOT DEAL: Firebolt at 50% OFF", StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
-                new Promo { Id = new Guid("e1dacf21-6caa-4779-9eb5-3f01bc88da94"), Discount = 10, Condition = false, DiscountDescription = "Everything with 10% OFF", StartDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
-                new Promo { Id = new Guid("e504f16f-de67-4d7f-90b0-2b604baa6010"), Discount = 30, Condition = true, DiscountDescription = "Everyone seeking happiness", CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
+                new Promo { Id = Guid.NewGuid(), Discount = 0, Condition = false, DiscountDescription = "We're to good to give discount", CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
+                new Promo { Id = Guid.NewGuid(), Discount = 50, Condition = true, DiscountDescription = "HOT DEAL: Firebolt at 50% OFF", StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
+                new Promo { Id = Guid.NewGuid(), Discount = 10, Condition = false, DiscountDescription = "Everything with 10% OFF", StartDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
+                new Promo { Id = Guid.NewGuid(), Discount = 30, Condition = true, DiscountDescription = "Everyone seeking happiness", CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
         }
     }
 }
