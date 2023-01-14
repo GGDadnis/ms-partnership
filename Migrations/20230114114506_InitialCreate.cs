@@ -94,7 +94,7 @@ namespace mspartnership.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
                     role = table.Column<string>(type: "text", nullable: false),
                     professional = table.Column<bool>(type: "boolean", nullable: false),
@@ -124,8 +124,8 @@ namespace mspartnership.Migrations
                     discount = table.Column<double>(type: "double precision", nullable: false),
                     condition = table.Column<bool>(type: "boolean", nullable: false),
                     discountdescription = table.Column<string>(name: "discount_description", type: "text", nullable: true),
-                    startdate = table.Column<DateTime>(name: "start_date", type: "date", nullable: false),
-                    enddate = table.Column<DateTime>(name: "end_date", type: "date", nullable: false),
+                    startdate = table.Column<DateTime>(name: "start_date", type: "timestamp with time zone", nullable: true),
+                    enddate = table.Column<DateTime>(name: "end_date", type: "timestamp with time zone", nullable: true),
                     companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: false)
                 },
                 constraints: table =>

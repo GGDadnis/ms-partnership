@@ -26,7 +26,7 @@ namespace ms_partnership.Controllers.Security
         [HttpPost, AllowAnonymous]
         public IActionResult LoginUsuario([FromBody] LoginModel doinglogin)
         {
-            Login login = _context.Logins.FirstOrDefault(login => login.Username == doinglogin.Username);
+            Login login = _context.Logins.FirstOrDefault(login => login.Email == doinglogin.Username);
 
             var failReturn = Unauthorized("Invalid username or password");
 
@@ -65,7 +65,7 @@ namespace ms_partnership.Controllers.Security
         {
             return new[] {
                         new Claim("id", login.Id.ToString()),
-                        new Claim("username", login.Username),
+                        new Claim("username", login.Email),
                         new Claim("password", login.Password),
                         new Claim("role", login.Role),
                         new Claim("professional", login.Professional.ToString())
