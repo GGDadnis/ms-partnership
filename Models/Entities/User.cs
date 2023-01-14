@@ -26,8 +26,8 @@ namespace ms_partnership.Models.Entities
         [Column("avatar_img")]
         public string? AvatarImg { get; set; }
 
-        public virtual Address Address { get; set; }
+        public virtual Address? Address { get; set; }
         public virtual Login Login { get; set; }
-        public virtual List<Review> Reviews { get; set; }
+        public virtual List<Review>? Reviews { get; set; }
     }
 }
