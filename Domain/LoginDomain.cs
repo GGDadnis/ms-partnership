@@ -8,6 +8,9 @@ using ms_partnership.Data;
 using ms_partnership.Interfaces;
 using ms_partnership.Models.Entities;
 using ms_partnership.Models.Entities.Dtos.Login;
+using ms_partnership.Service;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace ms_partnership.Domain
 {
@@ -15,18 +18,40 @@ namespace ms_partnership.Domain
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly HashPassword _hashpassword;
 
         public LoginDomain(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
+            _hashpassword = new HashPassword();
         }
 
         public ReadLoginDto Add(AddLoginDto dto)
         {
-            Login login = _mapper.Map<Login>(dto);
+            byte[] salting = RandomNumberGenerator.GetBytes(128 / 8);
+            var hPassword = _hashpassword.HashingPassword(dto.Password);
+            var cryptPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: dto.Password!,
+                salt: salting,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 100000,
+                numBytesRequested: 256 / 8));
+            
+            Login login = new Login()
+            {
+                Email = dto.Email,
+                Password = cryptPassword,
+                Role = dto.Role,
+                Professional = dto.Professional,
+                Salt = salting,
+                CompanyId = dto.CompanyId,
+                UserId = dto.UserId
+            };
+
             _context.Logins.Add(login);
             _context.SaveChanges();
+
             ReadLoginDto loginDto = _mapper.Map<ReadLoginDto>(login);
             return loginDto;
         }
@@ -78,6 +103,5 @@ namespace ms_partnership.Domain
             }
             return null;
         }
-
     }
 }

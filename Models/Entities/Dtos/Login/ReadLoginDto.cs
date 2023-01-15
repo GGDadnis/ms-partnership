@@ -33,6 +33,10 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         [Column("professional")]
         public Boolean Professional { get; set; } = false;
 
+        [Required]
+        [Column("salt")]
+        public byte[]? salt { get; set; }
+
         [Column("company_id")]
         public Guid? CompanyId { get; set; }
 
