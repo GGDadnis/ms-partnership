@@ -31,7 +31,7 @@ namespace ms_partnership.Domain
         public ReadLoginDto Add(AddLoginDto dto)
         {
             byte[] salting = RandomNumberGenerator.GetBytes(128 / 8);
-            string saltToString = Encoding.UTF8.GetString(salting);
+            string saltToString = Convert.ToBase64String(salting);
             string spicePassword = dto.Password + saltToString;
             var hPassword = _hashpassword.HashingPassword(spicePassword);
             
