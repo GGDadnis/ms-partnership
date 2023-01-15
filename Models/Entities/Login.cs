@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace ms_partnership.Models.Entities
 {
+    [Table("login")]
     public class Login
     {
         [Key]
