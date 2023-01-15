@@ -29,9 +29,8 @@ namespace ms_partnership.Models.Entities
         [DefaultValue(false)]
         public Boolean Professional { get; set; } = false;
 
-        [Required]
         [Column("salt")]
-        public byte[]? Salt { get; set; }
+        public string? Salt { get; set; }
 
         [Column("company_id")]
         [DefaultValue(null)]

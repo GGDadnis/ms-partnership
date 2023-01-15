@@ -11,6 +11,7 @@ using ms_partnership.Models.Entities.Dtos.Login;
 using ms_partnership.Service;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Text;
 
 namespace ms_partnership.Domain
 {
@@ -30,21 +31,17 @@ namespace ms_partnership.Domain
         public ReadLoginDto Add(AddLoginDto dto)
         {
             byte[] salting = RandomNumberGenerator.GetBytes(128 / 8);
-            var hPassword = _hashpassword.HashingPassword(dto.Password);
-            var cryptPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: dto.Password!,
-                salt: salting,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100000,
-                numBytesRequested: 256 / 8));
+            string saltToString = Encoding.UTF8.GetString(salting);
+            string spicePassword = dto.Password + saltToString;
+            var hPassword = _hashpassword.HashingPassword(spicePassword);
             
             Login login = new Login()
             {
                 Email = dto.Email,
-                Password = cryptPassword,
+                Password = hPassword,
                 Role = dto.Role,
                 Professional = dto.Professional,
-                Salt = salting,
+                Salt = saltToString,
                 CompanyId = dto.CompanyId,
                 UserId = dto.UserId
             };
