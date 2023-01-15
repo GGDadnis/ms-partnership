@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using ms_partnership.Data;
 using ms_partnership.Models.Entities;
 using ms_partnership.Models.Security;
+using ms_partnership.Service;
 
 namespace ms_partnership.Controllers.Security
 {
@@ -16,11 +17,13 @@ namespace ms_partnership.Controllers.Security
     {
         private readonly IConfiguration _configuration;
         private readonly AppDbContext _context;
+        private readonly HashPassword _hashpassword;
 
         public LoginManagementController(IConfiguration configuration, AppDbContext context)
         {
             _configuration = configuration;
             _context = context;
+            _hashpassword = new HashPassword();
         }
 
         [HttpPost, AllowAnonymous]
@@ -35,7 +38,7 @@ namespace ms_partnership.Controllers.Security
                 return failReturn;
             }
 
-            if (doinglogin.Password == login.Password)
+            if (_hashpassword.HashingPassword(doinglogin.Password, login.Salt) == login.Password)
             {
                 var tokenString = TokenBear(login);
                 return Ok(new { token = tokenString });
