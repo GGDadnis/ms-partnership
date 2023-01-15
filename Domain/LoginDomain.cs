@@ -30,18 +30,16 @@ namespace ms_partnership.Domain
 
         public ReadLoginDto Add(AddLoginDto dto)
         {
-            byte[] salting = RandomNumberGenerator.GetBytes(128 / 8);
-            string saltToString = Convert.ToBase64String(salting);
-            string spicePassword = dto.Password + saltToString;
-            var hPassword = _hashpassword.HashingPassword(spicePassword);
+            string salt = _hashpassword.CreatingSalt();
+            string HashPassword = _hashpassword.HashingPassword(dto.Password, salt);
             
             Login login = new Login()
             {
                 Email = dto.Email,
-                Password = hPassword,
+                Password = HashPassword,
                 Role = dto.Role,
                 Professional = dto.Professional,
-                Salt = saltToString,
+                Salt = salt,
                 CompanyId = dto.CompanyId,
                 UserId = dto.UserId
             };
