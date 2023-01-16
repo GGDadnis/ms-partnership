@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230115161324_InitialCreate")]
+    [Migration("20230116143650_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -84,7 +84,7 @@ namespace mspartnership.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6994962e-dc64-4409-8abd-88b390aecda0"),
+                            Id = new Guid("2ab0da6e-6e1a-4bb9-8f91-84d51e4b4f9c"),
                             Bairro = "Boa Vista de São Caetano",
                             Cep = "40385640",
                             Complemento = "",
@@ -95,7 +95,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0f667d03-e4d0-47c1-9513-d7daf8b28b1c"),
+                            Id = new Guid("56489890-2942-4637-8e73-349e3989be1a"),
                             Bairro = "Santo Antônio I",
                             Cep = "35430505",
                             Complemento = "",
@@ -106,7 +106,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bc4d8665-9332-4aad-bd2a-9957b7909305"),
+                            Id = new Guid("eaf628c9-27cd-4e9f-8b09-1d71ae94d3cf"),
                             Bairro = "Mooca",
                             Cep = "03162160",
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
@@ -117,7 +117,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("282107f5-af3b-43b9-a4b2-b66969410ce5"),
+                            Id = new Guid("764bf1e5-f9a9-46d4-9414-d3a0e6ce3528"),
                             Bairro = "Centro",
                             Cep = "20080020",
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
@@ -128,7 +128,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ec572f93-0e79-4318-8c8b-7c7f53e2d3e6"),
+                            Id = new Guid("6fc7bc11-7496-43f6-a8c6-e32235ba6064"),
                             Bairro = "Diagon Alley",
                             Cep = "North Side",
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
@@ -139,7 +139,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5ae850fe-3a02-4036-942d-6565ee3096de"),
+                            Id = new Guid("3ca09b13-21d9-407e-be40-04f0b96067a7"),
                             Bairro = "Diagon Alley",
                             Cep = "North Side",
                             CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"),
@@ -420,6 +420,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("condition");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created");
+
                     b.Property<double>("Discount")
                         .HasColumnType("double precision")
                         .HasColumnName("discount");
@@ -445,36 +449,40 @@ namespace mspartnership.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a2470348-a73e-4bed-9c8c-aa5a673f8e75"),
+                            Id = new Guid("a99d97ef-4432-4ca3-a3eb-fc962ef401a0"),
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
                             Condition = false,
+                            Created = new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2750),
                             Discount = 0.0,
                             DiscountDescription = "We're to good to give discount"
                         },
                         new
                         {
-                            Id = new Guid("f73aea23-41bc-482d-a8a5-d3e886d274f2"),
+                            Id = new Guid("83e0f247-ed86-4966-872a-8ca9c8cd1236"),
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
                             Condition = true,
+                            Created = new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2753),
                             Discount = 50.0,
                             DiscountDescription = "HOT DEAL: Firebolt at 50% OFF",
-                            EndDate = new DateTime(2023, 1, 20, 16, 13, 24, 314, DateTimeKind.Utc).AddTicks(556),
-                            StartDate = new DateTime(2023, 1, 15, 16, 13, 24, 314, DateTimeKind.Utc).AddTicks(554)
+                            EndDate = new DateTime(2023, 1, 21, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2755),
+                            StartDate = new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2753)
                         },
                         new
                         {
-                            Id = new Guid("5d0f52f8-e548-43bd-9f0f-1788ba4d75a9"),
+                            Id = new Guid("6c607f6a-b404-497a-994c-bef47f421840"),
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
                             Condition = false,
+                            Created = new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2764),
                             Discount = 10.0,
                             DiscountDescription = "Everything with 10% OFF",
-                            StartDate = new DateTime(2023, 1, 20, 16, 13, 24, 314, DateTimeKind.Utc).AddTicks(565)
+                            StartDate = new DateTime(2023, 1, 21, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2765)
                         },
                         new
                         {
-                            Id = new Guid("8540160d-6e97-425e-b52c-86595b1fd04c"),
+                            Id = new Guid("3fb3408b-ce73-40fb-9aab-f57314d6f0b9"),
                             CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"),
                             Condition = true,
+                            Created = new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2768),
                             Discount = 30.0,
                             DiscountDescription = "Everyone seeking happiness"
                         });

@@ -1,6 +1,5 @@
 using System.Security.Cryptography;
 using System.Text;
-using ms_partnership.Models.Security;
 
 namespace ms_partnership.Service
 {

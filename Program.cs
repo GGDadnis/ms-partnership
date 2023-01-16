@@ -6,7 +6,9 @@ using Microsoft.OpenApi.Models;
 using ms_partnership.Auth;
 using ms_partnership.Data;
 using ms_partnership.Domain;
+using ms_partnership.Exceptions.PaginationExceptions;
 using ms_partnership.Interfaces;
+using ms_partnership.Interfaces.PaginationInterfaces;
 using ms_partnership.Models.Entities;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -19,6 +21,7 @@ builder.Services.AddScoped<IPromo, PromoDomain>();
 builder.Services.AddScoped<IAddress, AddressDomain>();
 builder.Services.AddScoped<ICategory, CategoryDomain>();
 builder.Services.AddScoped<ILogin, LoginDomain>();
+builder.Services.AddScoped<IPromoPaginationExceptions, PromoPaginationExceptions>();
 
 
 // Add services to the container.
