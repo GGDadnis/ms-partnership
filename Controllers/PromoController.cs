@@ -87,7 +87,7 @@ namespace ms_partnership.Controllers
             return Ok(promos);
         }
 
-        [HttpGet("PagingByCompany/page/{page:int}/itemsPage/{itemsPage:int}")]
+        [HttpGet("PagingByCompany/{companyId:Guid}/page/{page:int}/itemsPage/{itemsPage:int}")]
         public IActionResult PromosByCompany(Guid companyId, int page = 1, int itemsPage = 9)
         {
             Result resultPage, resultItems;
