@@ -31,12 +31,12 @@ namespace ms_partnership.Domain
         public ReadLoginDto Add(AddLoginDto dto)
         {
             string salt = _hashpassword.CreatingSalt();
-            string HashPassword = _hashpassword.HashingPassword(dto.Password, salt);
+            string hashPassword = _hashpassword.HashingPassword(dto.Password, salt);
             
             Login login = new Login()
             {
                 Email = dto.Email,
-                Password = HashPassword,
+                Password = hashPassword,
                 Role = dto.Role,
                 Professional = dto.Professional,
                 Salt = salt,
@@ -89,8 +89,17 @@ namespace ms_partnership.Domain
         public ReadLoginDto Update(Guid id, UpdateLoginDto dto)
         {
             Login login = _context.Logins.FirstOrDefault(login => login.Id == id);
+            
             if(login != null)
             {
+                string hashPassword = _hashpassword.HashingPassword(dto.Password, login.Salt);
+
+                dto = new UpdateLoginDto()
+                {
+                    Email = dto.Email,
+                    Password = hashPassword,
+                };
+                
                 _mapper.Map(dto, login);
                 ReadLoginDto loginDto = _mapper.Map<ReadLoginDto>(login);
                 _context.SaveChanges();

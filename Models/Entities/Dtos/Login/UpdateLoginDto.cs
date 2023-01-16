@@ -19,17 +19,5 @@ namespace ms_partnership.Models.Entities.Dtos.Login
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Login need to have a password", AllowEmptyStrings = false)]
         public string Password { get; set; }
-
-        [Required]
-        [Column("professional")]
-        public Boolean Professional { get; set; } = false;
-
-        [Column("company_id")]
-        [DefaultValue(null)]
-        public Guid? CompanyId { get; set; } = null;
-
-        [Column("user_id")]
-        [DefaultValue(null)]
-        public Guid? UserId { get; set; } = null;
     }
 }
