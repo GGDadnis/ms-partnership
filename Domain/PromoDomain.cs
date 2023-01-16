@@ -84,7 +84,7 @@ namespace ms_partnership.Domain
             List<Promo> promos = _context.Promos
             .Where(promo => promo.Created.Month == period.Month
             && promo.Created.Year == period.Year)
-            .OrderBy(promo => promo.Created)
+            .OrderBy(promo => promo.Created.Day)
             .Skip(skip)
             .Take(take)
             .ToList();
@@ -100,11 +100,10 @@ namespace ms_partnership.Domain
         {
             int skip = itemsPage * (page - 1);
             int take = itemsPage;
-            string companyIdString = companyId.ToString();
 
             List<Promo> promos = _context.Promos
-            .Where(promoCompany => promoCompany.CompanyId.ToString().Contains(companyIdString))
-            .OrderBy(promo => promo.Created)
+            .Where(promoCompany => promoCompany.CompanyId.ToString().Contains(companyId.ToString()))
+            .OrderBy(promo => promo.Created.Day)
             .Skip(skip)
             .Take(take)
             .ToList();

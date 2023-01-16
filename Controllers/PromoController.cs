@@ -87,6 +87,30 @@ namespace ms_partnership.Controllers
             return Ok(promos);
         }
 
+        [HttpGet("PagingByCompany/page/{page:int}/itemsPage/{itemsPage:int}")]
+        public IActionResult PromosByCompany(Guid companyId, int page = 1, int itemsPage = 9)
+        {
+            Result resultPage, resultItems;
+
+            resultPage = _pagingexceptions.ValidatePage(itemsPage);
+
+            if (resultPage.IsFailed)
+            {
+                return BadRequest(messageException(resultPage));
+            }
+
+            resultItems = _pagingexceptions.ValidateSize(itemsPage);
+
+            if (resultItems.IsFailed)
+            {
+                return BadRequest(messageException(resultItems));
+            }
+
+            PromoPagination promos = _interfaces.promoPaginationCompany(companyId, page, itemsPage);
+
+            return Ok(promos);
+        }
+
         [HttpPut("{id}")]
         public IActionResult UpdatePromo(Guid id, [FromBody] UpdatePromoDto dto)
         {
