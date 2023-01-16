@@ -127,6 +127,7 @@ namespace mspartnership.Migrations
                     discount = table.Column<double>(type: "double precision", nullable: false),
                     condition = table.Column<bool>(type: "boolean", nullable: false),
                     discountdescription = table.Column<string>(name: "discount_description", type: "text", nullable: true),
+                    created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     startdate = table.Column<DateTime>(name: "start_date", type: "timestamp with time zone", nullable: true),
                     enddate = table.Column<DateTime>(name: "end_date", type: "timestamp with time zone", nullable: true),
                     companyid = table.Column<Guid>(name: "company_id", type: "uuid", nullable: false)
@@ -203,8 +204,8 @@ namespace mspartnership.Migrations
                 columns: new[] { "id", "bairro", "cep", "company_id", "complemento", "localidade", "logradouro", "uf", "user_id" },
                 values: new object[,]
                 {
-                    { new Guid("0f667d03-e4d0-47c1-9513-d7daf8b28b1c"), "Santo Antônio I", "35430505", null, "", "Ponte Nova", "Rua Rio Doce", "MG", new Guid("0ae4a7a5-5314-4312-ba10-e074d32ed6b9") },
-                    { new Guid("6994962e-dc64-4409-8abd-88b390aecda0"), "Boa Vista de São Caetano", "40385640", null, "", "Salvador", "Rua José Tibério", "BA", new Guid("5e30cb9e-5e09-4d8c-84b6-33a4effb46bc") }
+                    { new Guid("2ab0da6e-6e1a-4bb9-8f91-84d51e4b4f9c"), "Boa Vista de São Caetano", "40385640", null, "", "Salvador", "Rua José Tibério", "BA", new Guid("5e30cb9e-5e09-4d8c-84b6-33a4effb46bc") },
+                    { new Guid("56489890-2942-4637-8e73-349e3989be1a"), "Santo Antônio I", "35430505", null, "", "Ponte Nova", "Rua Rio Doce", "MG", new Guid("0ae4a7a5-5314-4312-ba10-e074d32ed6b9") }
                 });
 
             migrationBuilder.InsertData(
@@ -231,10 +232,10 @@ namespace mspartnership.Migrations
                 columns: new[] { "id", "bairro", "cep", "company_id", "complemento", "localidade", "logradouro", "uf", "user_id" },
                 values: new object[,]
                 {
-                    { new Guid("282107f5-af3b-43b9-a4b2-b66969410ce5"), "Centro", "20080020", new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), "", "Rio de Janeiro", "Rua dos Andradas", "RJ", null },
-                    { new Guid("5ae850fe-3a02-4036-942d-6565ee3096de"), "Diagon Alley", "North Side", new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"), "93, Giant sir with hat at entrance", "London", "Charing Cross Road", "LO", null },
-                    { new Guid("bc4d8665-9332-4aad-bd2a-9957b7909305"), "Mooca", "03162160", new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), "", "São Paulo", "Rua Tagi", "SP", null },
-                    { new Guid("ec572f93-0e79-4318-8c8b-7c7f53e2d3e6"), "Diagon Alley", "North Side", new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), "", "London", "Charing Cross Road", "LO", null }
+                    { new Guid("3ca09b13-21d9-407e-be40-04f0b96067a7"), "Diagon Alley", "North Side", new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"), "93, Giant sir with hat at entrance", "London", "Charing Cross Road", "LO", null },
+                    { new Guid("6fc7bc11-7496-43f6-a8c6-e32235ba6064"), "Diagon Alley", "North Side", new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), "", "London", "Charing Cross Road", "LO", null },
+                    { new Guid("764bf1e5-f9a9-46d4-9414-d3a0e6ce3528"), "Centro", "20080020", new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), "", "Rio de Janeiro", "Rua dos Andradas", "RJ", null },
+                    { new Guid("eaf628c9-27cd-4e9f-8b09-1d71ae94d3cf"), "Mooca", "03162160", new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), "", "São Paulo", "Rua Tagi", "SP", null }
                 });
 
             migrationBuilder.InsertData(
@@ -252,13 +253,13 @@ namespace mspartnership.Migrations
 
             migrationBuilder.InsertData(
                 table: "promo",
-                columns: new[] { "id", "company_id", "condition", "discount", "discount_description", "end_date", "start_date" },
+                columns: new[] { "id", "company_id", "condition", "created", "discount", "discount_description", "end_date", "start_date" },
                 values: new object[,]
                 {
-                    { new Guid("5d0f52f8-e548-43bd-9f0f-1788ba4d75a9"), new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), false, 10.0, "Everything with 10% OFF", null, new DateTime(2023, 1, 20, 16, 13, 24, 314, DateTimeKind.Utc).AddTicks(565) },
-                    { new Guid("8540160d-6e97-425e-b52c-86595b1fd04c"), new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"), true, 30.0, "Everyone seeking happiness", null, null },
-                    { new Guid("a2470348-a73e-4bed-9c8c-aa5a673f8e75"), new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), false, 0.0, "We're to good to give discount", null, null },
-                    { new Guid("f73aea23-41bc-482d-a8a5-d3e886d274f2"), new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), true, 50.0, "HOT DEAL: Firebolt at 50% OFF", new DateTime(2023, 1, 20, 16, 13, 24, 314, DateTimeKind.Utc).AddTicks(556), new DateTime(2023, 1, 15, 16, 13, 24, 314, DateTimeKind.Utc).AddTicks(554) }
+                    { new Guid("3fb3408b-ce73-40fb-9aab-f57314d6f0b9"), new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"), true, new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2768), 30.0, "Everyone seeking happiness", null, null },
+                    { new Guid("6c607f6a-b404-497a-994c-bef47f421840"), new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), false, new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2764), 10.0, "Everything with 10% OFF", null, new DateTime(2023, 1, 21, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2765) },
+                    { new Guid("83e0f247-ed86-4966-872a-8ca9c8cd1236"), new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), true, new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2753), 50.0, "HOT DEAL: Firebolt at 50% OFF", new DateTime(2023, 1, 21, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2755), new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2753) },
+                    { new Guid("a99d97ef-4432-4ca3-a3eb-fc962ef401a0"), new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), false, new DateTime(2023, 1, 16, 14, 36, 49, 898, DateTimeKind.Utc).AddTicks(2750), 0.0, "We're to good to give discount", null, null }
                 });
 
             migrationBuilder.CreateIndex(

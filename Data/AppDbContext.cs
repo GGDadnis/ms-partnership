@@ -112,10 +112,10 @@ namespace ms_partnership.Data
                 new Address { Id = Guid.NewGuid(), Cep = "North Side", Logradouro = "Charing Cross Road", Bairro = "Diagon Alley", Localidade = "London", Uf = "LO", Complemento = "93, Giant sir with hat at entrance", CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
         
             Builder.Entity<Promo>().HasData(
-                new Promo { Id = Guid.NewGuid(), Discount = 0, Condition = false, DiscountDescription = "We're to good to give discount", CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
-                new Promo { Id = Guid.NewGuid(), Discount = 50, Condition = true, DiscountDescription = "HOT DEAL: Firebolt at 50% OFF", StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
-                new Promo { Id = Guid.NewGuid(), Discount = 10, Condition = false, DiscountDescription = "Everything with 10% OFF", StartDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
-                new Promo { Id = Guid.NewGuid(), Discount = 30, Condition = true, DiscountDescription = "Everyone seeking happiness", CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
+                new Promo { Id = Guid.NewGuid(), Discount = 0, Condition = false, DiscountDescription = "We're to good to give discount", Created = DateTime.UtcNow, CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c")},
+                new Promo { Id = Guid.NewGuid(), Discount = 50, Condition = true, DiscountDescription = "HOT DEAL: Firebolt at 50% OFF", Created = DateTime.UtcNow, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
+                new Promo { Id = Guid.NewGuid(), Discount = 10, Condition = false, DiscountDescription = "Everything with 10% OFF", Created = DateTime.UtcNow, StartDate = DateTime.UtcNow.AddDays(5), CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976")},
+                new Promo { Id = Guid.NewGuid(), Discount = 30, Condition = true, DiscountDescription = "Everyone seeking happiness", Created = DateTime.UtcNow, CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c")});
         }
     }
 }

@@ -24,6 +24,10 @@ namespace ms_partnership.Models.Entities
         [Column("discount_description")]
         public string? DiscountDescription { get; set; }
 
+        [Column("created")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+
         [Column("start_date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DefaultValue(null)]

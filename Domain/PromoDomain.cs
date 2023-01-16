@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using FluentResults;
 using ms_partnership.Data;
 using ms_partnership.Interfaces;
 using ms_partnership.Models.Entities;
 using ms_partnership.Models.Entities.Dtos.Promo;
+using ms_partnership.Models.Pagination;
 
 namespace ms_partnership.Domain
 {
@@ -77,6 +74,46 @@ namespace ms_partnership.Domain
                 return promoDto;
             }
             return null;
+        }
+
+        public virtual PromoPagination promoPaginationPeriod(int page, int itemsPage, DateTime period)
+        {
+            int skip = itemsPage * (page - 1);
+            int take = itemsPage;
+
+            List<Promo> promos = _context.Promos
+            .Where(promo => promo.Created.Month == period.Month
+            && promo.Created.Year == period.Year)
+            .OrderBy(promo => promo.Created)
+            .Skip(skip)
+            .Take(take)
+            .ToList();
+
+            int totalPromos = promos.Count();
+
+            int totalPages = (int)Math.Ceiling((double)totalPromos / (double)itemsPage);
+
+            return new PromoPagination(_mapper.Map<List<ReadPromoDto>>(promos), totalPages, page, totalPromos);
+        }
+
+        public virtual PromoPagination promoPaginationCompany(Guid companyId, int page, int itemsPage)
+        {
+            int skip = itemsPage * (page - 1);
+            int take = itemsPage;
+            string companyIdString = companyId.ToString();
+
+            List<Promo> promos = _context.Promos
+            .Where(promoCompany => promoCompany.CompanyId.ToString().Contains(companyIdString))
+            .OrderBy(promo => promo.Created)
+            .Skip(skip)
+            .Take(take)
+            .ToList();
+
+            int totalPromos = promos.Count();
+
+            int totalPages = (int)Math.Ceiling((double)totalPromos / (double)itemsPage);
+
+            return new PromoPagination(_mapper.Map<List<ReadPromoDto>>(promos), totalPages, page, totalPromos);
         }
     }
 }
