@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace ms_partnership.Models.Entities
 {
-    [Table("Review")]
+    [Table("review")]
     public class Review
     {
         [Key]

@@ -8,6 +8,10 @@ using ms_partnership.Data;
 using ms_partnership.Interfaces;
 using ms_partnership.Models.Entities;
 using ms_partnership.Models.Entities.Dtos.Login;
+using ms_partnership.Service;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Text;
 
 namespace ms_partnership.Domain
 {
@@ -15,18 +19,34 @@ namespace ms_partnership.Domain
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly HashPassword _hashpassword;
 
         public LoginDomain(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
+            _hashpassword = new HashPassword();
         }
 
         public ReadLoginDto Add(AddLoginDto dto)
         {
-            Login login = _mapper.Map<Login>(dto);
+            string salt = _hashpassword.CreatingSalt();
+            string hashPassword = _hashpassword.HashingPassword(dto.Password, salt);
+            
+            Login login = new Login()
+            {
+                Email = dto.Email,
+                Password = hashPassword,
+                Role = dto.Role,
+                Professional = dto.Professional,
+                Salt = salt,
+                CompanyId = dto.CompanyId,
+                UserId = dto.UserId
+            };
+
             _context.Logins.Add(login);
             _context.SaveChanges();
+
             ReadLoginDto loginDto = _mapper.Map<ReadLoginDto>(login);
             return loginDto;
         }
@@ -69,8 +89,17 @@ namespace ms_partnership.Domain
         public ReadLoginDto Update(Guid id, UpdateLoginDto dto)
         {
             Login login = _context.Logins.FirstOrDefault(login => login.Id == id);
+            
             if(login != null)
             {
+                string hashPassword = _hashpassword.HashingPassword(dto.Password, login.Salt);
+
+                dto = new UpdateLoginDto()
+                {
+                    Email = dto.Email,
+                    Password = hashPassword,
+                };
+                
                 _mapper.Map(dto, login);
                 ReadLoginDto loginDto = _mapper.Map<ReadLoginDto>(login);
                 _context.SaveChanges();
@@ -78,6 +107,5 @@ namespace ms_partnership.Domain
             }
             return null;
         }
-
     }
 }

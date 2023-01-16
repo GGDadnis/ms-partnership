@@ -17,7 +17,7 @@ namespace ms_partnership.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateLogin([FromBody] AddLoginDto? dto)
+        public async Task<IActionResult> CreateLogin(AddLoginDto dto)
         {
             var login = _interfaces.Add(dto);
             if (login != null)

@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace ms_partnership.Models.Entities
 {
+    [Table("login")]
     public class Login
     {
         [Key]
@@ -28,6 +29,9 @@ namespace ms_partnership.Models.Entities
         [Column("professional")]
         [DefaultValue(false)]
         public Boolean Professional { get; set; } = false;
+
+        [Column("salt")]
+        public string? Salt { get; set; }
 
         [Column("company_id")]
         [DefaultValue(null)]

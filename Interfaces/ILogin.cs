@@ -8,6 +8,5 @@ namespace ms_partnership.Interfaces
 {
     public interface ILogin : IBaseGuid<AddLoginDto, ReadLoginDto>, IUpdate<UpdateLoginDto, ReadLoginDto>
     {
-        
     }
 }
