@@ -1,5 +1,6 @@
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using ms_partnership.Exceptions.InterfacesExceptions;
 using ms_partnership.Interfaces;
 using ms_partnership.Models.Entities.Dtos.Login;
 
@@ -10,20 +11,36 @@ namespace ms_partnership.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ILogin _interfaces;
+        private readonly ILoginExceptions _exceptions;
 
-        public LoginController(ILogin interfaces)
+        public LoginController(ILogin interfaces, ILoginExceptions exceptions)
         {
             _interfaces = interfaces;
+            _exceptions = exceptions;
+        }
+
+        public static IEnumerable<String> messageException(Result result)
+        {
+            return result.Reasons.Select(reason => reason.Message);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLogin(AddLoginDto dto)
+        public IActionResult CreateLogin([FromBody] AddLoginDto dto)
         {
+            Result resultBlockCopycat;
+
+            resultBlockCopycat = _exceptions.BlockCopycat(dto.Email);
+            if (resultBlockCopycat.IsFailed)
+            {
+                return BadRequest(messageException(resultBlockCopycat));
+            }
+
             var login = _interfaces.Add(dto);
             if (login != null)
             {
                 return Ok(login);
             }
+
             return BadRequest("Fail to create login");
         }
 
@@ -35,6 +52,7 @@ namespace ms_partnership.Controllers
             {
                 return Ok(login);
             }
+
             return BadRequest("Fail to find logins");
         }
 
@@ -52,6 +70,7 @@ namespace ms_partnership.Controllers
             {
                 return Ok(login);
             }
+
             return NotFound("Fail to find login");
         }
 
@@ -63,6 +82,7 @@ namespace ms_partnership.Controllers
             {
                 return Ok(login);
             }
+
             return BadRequest("Fail to update login");
         }
 
@@ -81,6 +101,7 @@ namespace ms_partnership.Controllers
             {
                 return BadRequest("Fail to delete login");
             }
+
             return Ok("Login deleted with sucess");
         }
     }
