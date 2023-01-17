@@ -24,6 +24,7 @@ builder.Services.AddScoped<ICategory, CategoryDomain>();
 builder.Services.AddScoped<ILogin, LoginDomain>();
 builder.Services.AddScoped<IPromoPaginationExceptions, PromoPaginationExceptions>();
 builder.Services.AddScoped<ILoginExceptions, LoginExceptions>();
+builder.Services.AddScoped<IPromoExceptions, PromoExceptions>();
 
 
 // Add services to the container.

@@ -1,5 +1,6 @@
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using ms_partnership.Exceptions.InterfacesExceptions;
 using ms_partnership.Interfaces;
 using ms_partnership.Interfaces.PaginationInterfaces;
 using ms_partnership.Models.Entities.Dtos.Promo;
@@ -12,11 +13,14 @@ namespace ms_partnership.Controllers
     public class PromoController : ControllerBase
     {
         private readonly IPromo _interfaces;
+        private readonly IPromoExceptions _exceptions;
         private readonly IPromoPaginationExceptions _pagingexceptions;
 
-        public PromoController(IPromo interfaces, IPromoPaginationExceptions pagingexceptions)
+        public PromoController(IPromo interfaces, IPromoPaginationExceptions pagingexceptions,
+        IPromoExceptions exceptions)
         {
             _interfaces = interfaces;
+            _exceptions = exceptions;
             _pagingexceptions = pagingexceptions;
         }
 
@@ -28,6 +32,20 @@ namespace ms_partnership.Controllers
         [HttpPost]
         public IActionResult CreatePromo([FromBody] AddPromoDto? dto)
         {
+            Result resultBlockStartAfterEndDate, resultBlockEndBeforeCreated;
+
+            resultBlockStartAfterEndDate = _exceptions.BlockStartAfterEndDate(dto.StartDate, dto.EndDate);
+            if (resultBlockStartAfterEndDate.IsFailed)
+            {
+                return BadRequest(messageException(resultBlockStartAfterEndDate));
+            }
+
+            resultBlockEndBeforeCreated = _exceptions.BlockEndBeforeCreated(dto.EndDate);
+            if (resultBlockEndBeforeCreated.IsFailed)
+            {
+                return BadRequest(messageException(resultBlockEndBeforeCreated));
+            }
+
             var promo = _interfaces.Add(dto);
             if (promo != null)
             {
@@ -114,6 +132,20 @@ namespace ms_partnership.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdatePromo(Guid id, [FromBody] UpdatePromoDto dto)
         {
+            Result resultBlockStartAfterEndDate, resultBlockEndBeforeCreated;
+
+            resultBlockStartAfterEndDate = _exceptions.BlockStartAfterEndDate(dto.StartDate, dto.EndDate);
+            if (resultBlockStartAfterEndDate.IsFailed)
+            {
+                return BadRequest(messageException(resultBlockStartAfterEndDate));
+            }
+
+            resultBlockEndBeforeCreated = _exceptions.BlockEndBeforeCreated(dto.EndDate);
+            if (resultBlockEndBeforeCreated.IsFailed)
+            {
+                return BadRequest(messageException(resultBlockEndBeforeCreated));
+            }
+
             ReadPromoDto promo = _interfaces.Update(id, dto);
             if (promo != null)
             {
