@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using ms_partnership.Auth;
 using ms_partnership.Data;
 using ms_partnership.Domain;
+using ms_partnership.Exceptions;
+using ms_partnership.Exceptions.InterfacesExceptions;
 using ms_partnership.Exceptions.PaginationExceptions;
 using ms_partnership.Interfaces;
 using ms_partnership.Interfaces.PaginationInterfaces;
-using ms_partnership.Models.Entities;
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IAddress, AddressDomain>();
 builder.Services.AddScoped<ICategory, CategoryDomain>();
 builder.Services.AddScoped<ILogin, LoginDomain>();
 builder.Services.AddScoped<IPromoPaginationExceptions, PromoPaginationExceptions>();
+builder.Services.AddScoped<ILoginExceptions, LoginExceptions>();
 
 
 // Add services to the container.
