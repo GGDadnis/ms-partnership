@@ -77,6 +77,14 @@ namespace ms_partnership.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateLogin(Guid id, [FromBody] UpdateLoginDto dto)
         {
+            Result resultBlockCopycatAtUpdate;
+
+            resultBlockCopycatAtUpdate = _exceptions.BlockCopycatAtUpdate(id, dto.Email);
+            if (resultBlockCopycatAtUpdate.IsFailed)
+            {
+                return BadRequest(messageException(resultBlockCopycatAtUpdate));
+            }
+
             ReadLoginDto login = _interfaces.Update(id, dto);
             if (login != null)
             {

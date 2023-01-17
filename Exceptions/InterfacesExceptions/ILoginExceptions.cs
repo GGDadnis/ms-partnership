@@ -5,5 +5,6 @@ namespace ms_partnership.Exceptions.InterfacesExceptions
     public interface ILoginExceptions
     {
         Result BlockCopycat(string user_email);
+        Result BlockCopycatAtUpdate(Guid user_id, string user_email);
     }
 }
