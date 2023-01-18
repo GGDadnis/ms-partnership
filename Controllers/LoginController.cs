@@ -27,8 +27,14 @@ namespace ms_partnership.Controllers
         [HttpPost]
         public IActionResult CreateLogin([FromBody] AddLoginDto dto)
         {
-            Result resultBlockCopycat;
+            Result resultBlockCopycat, resultNeedToHaveUserOrCompany;
 
+            resultNeedToHaveUserOrCompany = _exceptions.NeedToHaveUserOrCompany(dto.UserId, dto.CompanyId);
+            if (resultNeedToHaveUserOrCompany.IsFailed)
+            {
+                return BadRequest(messageException(resultNeedToHaveUserOrCompany));
+            }
+            
             resultBlockCopycat = _exceptions.BlockCopycat(dto.Email);
             if (resultBlockCopycat.IsFailed)
             {
