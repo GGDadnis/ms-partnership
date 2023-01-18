@@ -1,5 +1,6 @@
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using ms_partnership.Exceptions.InterfacesExceptions;
 using ms_partnership.Interfaces;
 using ms_partnership.Models.Entities.Dtos.Review;
 
@@ -10,15 +11,30 @@ namespace ms_partnership.Controllers
     public class ReviewController : ControllerBase
     {
         private readonly IReview _interfaces;
+        private readonly IReviewExceptions _exceptions;
 
-        public ReviewController(IReview interfaces)
+        public ReviewController(IReview interfaces, IReviewExceptions exceptions)
         {
             _interfaces = interfaces;
+            _exceptions = exceptions;
+        }
+
+        public static IEnumerable<String> messageException(Result result)
+        {
+            return result.Reasons.Select(reason => reason.Message);
         }
 
         [HttpPost]
         public IActionResult CreateReview([FromBody] AddReviewDto? dto)
         {
+            Result resultTheGoodTheBadAndTheGrade;
+            
+            resultTheGoodTheBadAndTheGrade = _exceptions.TheGoodTheBadAndTheGrade(dto.GoodGrade, dto.BadGrade);
+            if (resultTheGoodTheBadAndTheGrade.IsFailed)
+            {
+                return BadRequest(messageException(resultTheGoodTheBadAndTheGrade));
+            }
+            
             var review = _interfaces.Add(dto);
             if (review != null)
             {

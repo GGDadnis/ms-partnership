@@ -15,6 +15,16 @@ namespace ms_partnership.Exceptions
             _context = context;
             _mapper = mapper;
         }
+
+        public Result NeedToHaveUserOrCompany(Guid? user, Guid? company)
+        {
+            if (user == null && company == null)
+            {
+                return Result.Fail("Login should have user OR company ID");
+            }
+
+            return Result.Ok();
+        }
         public Result BlockCopycat(string user_email)
         {
             var email = _context.Logins.FirstOrDefault(login => login.Email == user_email);
@@ -31,8 +41,8 @@ namespace ms_partnership.Exceptions
         {
             var email = _context.Logins.FirstOrDefault(login => login.Email == user_email);
 
-            var idEqualsEmail = _context.Logins.FirstOrDefault(login => login.Id == user_id
-            && login.Email == user_email);
+            var idEqualsEmail = _context.Logins.FirstOrDefault(login =>
+                login.Id == user_id && login.Email == user_email);
 
             if (idEqualsEmail != null)
             {
