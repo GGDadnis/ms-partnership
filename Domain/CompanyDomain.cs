@@ -96,7 +96,7 @@ namespace ms_partnership.Domain
             var formatoImagem = imagemBase64.Substring(imagemBase64.LastIndexOf("image/") + 6, length);
             var key = Guid.NewGuid().ToString() + '.' + formatoImagem;
             var response = _amazonS3Service.SendAsync(filestream, key);
-            while (!response.IsCompleted)
+            while (!response.IsCompleted){}
             if (response.IsCompletedSuccessfully)
                 return response.Result;
             return "";
