@@ -10,7 +10,7 @@ using ms_partnership.Exceptions.InterfacesExceptions;
 using ms_partnership.Exceptions.PaginationExceptions;
 using ms_partnership.Interfaces;
 using ms_partnership.Interfaces.PaginationInterfaces;
-
+using ms_partnership.Service.EmailService;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +26,7 @@ builder.Services.AddScoped<IPromoPaginationExceptions, PromoPaginationExceptions
 builder.Services.AddScoped<ILoginExceptions, LoginExceptions>();
 builder.Services.AddScoped<IPromoExceptions, PromoExceptions>();
 builder.Services.AddScoped<IReviewExceptions, ReviewExceptions>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 // Add services to the container.
@@ -55,7 +56,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //AddAuthentication
 builder.Services.AddAuthentication(x =>
-{	
+{
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
@@ -65,7 +66,7 @@ builder.Services.AddAuthentication(x =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
     {
-       ValidateIssuer = true,
+        ValidateIssuer = true,
         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
         ValidateAudience = false,
         ValidateLifetime = false,
