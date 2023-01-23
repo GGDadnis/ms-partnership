@@ -93,7 +93,7 @@ namespace ms_partnership.Controllers
             {
                 return Ok(company);
             }
-            return BadRequest("Fail to update company");
+            return BadRequest("Fail to soft delete company");
         }
     }
 }
