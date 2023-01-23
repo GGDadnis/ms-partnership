@@ -26,6 +26,9 @@ namespace ms_partnership.Models.Entities
         [Column("total_grade")]
         public double? TotalGrade { get; set; }
 
+        [Column("active")]
+        public bool Active { get; set; } = true;
+
         [Column("category_id")]
         public Guid CategoryId { get; set; }
 

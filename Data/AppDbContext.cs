@@ -83,9 +83,9 @@ namespace ms_partnership.Data
                 new Category { Id = new Guid("9e6e6cbb-0a0f-47b0-9410-8b9af03f03f3"), Name = "Others"});
 
             Builder.Entity<Company>().HasData(   
-                new Company { Id = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), Name = "ProBmx", Cnpj = "87.374.287/0001-06", LogoImg = "", TotalGrade = 100, CategoryId = new Guid("9e6e6cbb-0a0f-47b0-9410-8b9af03f03f3")},
-                new Company { Id = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), Name = "Quality Quidditch Supplies", Cnpj = "82.509.987/0001-39", LogoImg = "", TotalGrade = 70, CategoryId = new Guid("c2e4c432-4e32-4bd3-a974-bd483c68c3cd")},
-                new Company { Id = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"), Name = "Weasleys’ Wizard Wheezes", Cnpj = "66.235.852/0001-76", LogoImg = "", TotalGrade = 40, CategoryId = new Guid("32885749-4cc2-4445-86f5-c2b310cc5c9f")});
+                new Company { Id = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"), Name = "ProBmx", Cnpj = "87.374.287/0001-06", LogoImg = "", TotalGrade = 100, CategoryId = new Guid("9e6e6cbb-0a0f-47b0-9410-8b9af03f03f3"), Active = true},
+                new Company { Id = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"), Name = "Quality Quidditch Supplies", Cnpj = "82.509.987/0001-39", LogoImg = "", TotalGrade = 70, CategoryId = new Guid("c2e4c432-4e32-4bd3-a974-bd483c68c3cd"), Active = true},
+                new Company { Id = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"), Name = "Weasleys’ Wizard Wheezes", Cnpj = "66.235.852/0001-76", LogoImg = "", TotalGrade = 40, CategoryId = new Guid("32885749-4cc2-4445-86f5-c2b310cc5c9f"), Active = true});
             
             Builder.Entity<User>().HasData(   
                 new User { Id = new Guid("ae0d5c55-7053-42be-a56d-e0a24cb2ecc9"), FirstName = "Admin", LastName = "Partnership", Cpf = "674.213.970-60", AvatarImg = ""},

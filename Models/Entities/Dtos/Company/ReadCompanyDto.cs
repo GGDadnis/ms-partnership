@@ -24,6 +24,9 @@ namespace ms_partnership.Models.Entities.Dtos.Company
         [Column("total_grade")]
         public double? TotalGrade { get; set; }
 
+        [Column("active")]
+        public bool active { get; set; } = true;
+
         public virtual Models.Entities.Category? Category { get; set; }
         public virtual List<Models.Entities.Address>? Addresses { get; set; }
         public virtual List<Models.Entities.Login>? Logins { get; set; }
