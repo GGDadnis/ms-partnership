@@ -24,6 +24,10 @@ namespace ms_partnership.Controllers
             {
                 return Ok(user);
             }
+            if (user.AvatarImg == "SEND_ERROR")
+            {
+                return BadRequest("Fail to send S3 image");
+            }
             return BadRequest("Fail to create user");
         }
 
@@ -62,6 +66,10 @@ namespace ms_partnership.Controllers
             {
                 return Ok(user);
             }
+            if (user.AvatarImg == "SEND_ERROR")
+                return BadRequest("Fail to send S3 image");
+            if (user.AvatarImg == "DELETE_ERROR")
+                return BadRequest("Fail to delete S3 image");
             return BadRequest("Fail to update user");
         }
 
@@ -83,6 +91,5 @@ namespace ms_partnership.Controllers
 
             return Ok("User deleted with sucess");
         }
-        
     }
 }

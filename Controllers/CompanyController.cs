@@ -9,7 +9,6 @@ namespace ms_partnership.Controllers
     [Route("[Controller]")]
     public class CompanyController : ControllerBase
     {
-        
         private readonly ICompany _interfaces;
 
         public CompanyController(ICompany interfaces)
@@ -25,6 +24,8 @@ namespace ms_partnership.Controllers
             {
                 return Ok(company);
             }
+            if (company.LogoImg == "SEND_ERROR")
+                return BadRequest("Fail to send S3 image");
             return BadRequest("Fail to create company");
         }
 
@@ -63,6 +64,10 @@ namespace ms_partnership.Controllers
             {
                 return Ok(company);
             }
+            if (company.LogoImg == "SEND_ERROR")
+                return BadRequest("Fail to send S3 image");
+            if (company.LogoImg == "DELETE_ERROR")
+                return BadRequest("Fail to delete S3 image");
             return BadRequest("Fail to update company");
         }
 
@@ -84,6 +89,5 @@ namespace ms_partnership.Controllers
 
             return Ok("Company deleted with sucess");
         }
-        
     }
 }

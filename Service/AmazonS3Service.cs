@@ -33,6 +33,5 @@ namespace ms_partnership.Service
             });
             return deleteResponse;
         }
-
     }
 }

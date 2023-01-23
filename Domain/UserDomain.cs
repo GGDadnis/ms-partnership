@@ -24,7 +24,7 @@ namespace ms_partnership.Domain
         public ReadUserDto Add(AddUserDto dto)
         {
             if (dto.AvatarImg != null || dto.AvatarImg != "")
-                dto.AvatarImg = EnviarImagemS3(dto.AvatarImg);
+                dto.AvatarImg = SendBase64ImageToS3(dto.AvatarImg);
             User user = _mapper.Map<User>(dto);
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -46,8 +46,12 @@ namespace ms_partnership.Domain
             User user = _context.Users.FirstOrDefault(user => user.Id == id);
             if (user != null)
             {
-                if (user.AvatarImg != null || user.AvatarImg != "")
-                    _amazonS3Service.DeleteAsync(user.AvatarImg);
+                if (user.AvatarImg != null || user.AvatarImg != ""){
+                    var response = _amazonS3Service.DeleteAsync(user.AvatarImg);
+                    while (!response.IsCompleted){}
+                    if (!response.IsCompletedSuccessfully)
+                        user.AvatarImg = "DELETE_ERROR";
+                }
                 _context.Remove(user);
                 _context.SaveChanges();
                 return true;
@@ -75,7 +79,7 @@ namespace ms_partnership.Domain
             if(user != null)
             {
                 if (dto.AvatarImg != null || dto.AvatarImg != ""){
-                    dto.AvatarImg = EnviarImagemS3(dto.AvatarImg);
+                    dto.AvatarImg = SendBase64ImageToS3(dto.AvatarImg);
                     if (user.AvatarImg != null || user.AvatarImg != "")
                         _amazonS3Service.DeleteAsync(user.AvatarImg);
                 }
@@ -87,18 +91,22 @@ namespace ms_partnership.Domain
             return null;
         }
 
-        private string EnviarImagemS3(string imagemBase64){
-            var conteudoBase64 = imagemBase64.Substring(imagemBase64.LastIndexOf(',') + 1);
-            byte[] bytes = Convert.FromBase64String(conteudoBase64);
+        private string SendBase64ImageToS3(string base64Image){
+            // Converter imagem base64
+            var contentBase64 = base64Image.Substring(base64Image.LastIndexOf(',') + 1);
+            byte[] bytes = Convert.FromBase64String(contentBase64);
             Stream filestream = new MemoryStream(bytes);
-            int length = imagemBase64.LastIndexOf(';') - imagemBase64.LastIndexOf("image/") - 6;
-            var formatoImagem = imagemBase64.Substring(imagemBase64.LastIndexOf("image/") + 6, length);
+            // Obter o formato da imagem original
+            int length = base64Image.LastIndexOf(';') - base64Image.LastIndexOf("image/") - 6;
+            var formatoImagem = base64Image.Substring(base64Image.LastIndexOf("image/") + 6, length);
+            // Gerar um nome do arquivo a partir de um Guid
             var key = Guid.NewGuid().ToString() + '.' + formatoImagem;
+            // Enviar imagem para a S3 e aguardar a resposta
             var response = _amazonS3Service.SendAsync(filestream, key);
             while (!response.IsCompleted){}
             if (response.IsCompletedSuccessfully)
                 return response.Result;
-            return "";
+            return "SEND_ERROR";
         }
     }
 }
