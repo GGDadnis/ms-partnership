@@ -9,7 +9,6 @@ namespace ms_partnership.Controllers
     [Route("[Controller]")]
     public class CompanyController : ControllerBase
     {
-        
         private readonly ICompany _interfaces;
 
         public CompanyController(ICompany interfaces)
@@ -69,31 +68,12 @@ namespace ms_partnership.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteCompany(Guid id)
         {
-            Result idResult = _interfaces.IdValidate(id);
-
-            if (idResult.IsFailed)
-            {
-                return BadRequest("Invalid company id");
-            }
-
-            var company = _interfaces.Remove(id);
-            if (company != true)
-            {
-                return BadRequest("Fail to delete company");
-            }
-
-            return Ok("Company deleted with sucess");
-        }
-
-        [HttpDelete("soft/{id}")]
-        public IActionResult SoftDeleteCompany(Guid id)
-        {
             var company = _interfaces.LogicalRemove(id);
             if (company != null)
             {
                 return Ok(company);
             }
-            return BadRequest("Fail to soft delete company");
+            return BadRequest("Fail to delete company");
         }
     }
 }
