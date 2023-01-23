@@ -84,6 +84,16 @@ namespace ms_partnership.Controllers
 
             return Ok("Company deleted with sucess");
         }
-        
+
+        [HttpDelete("soft/{id}")]
+        public IActionResult SoftDeleteCompany(Guid id)
+        {
+            var company = _interfaces.LogicalRemove(id);
+            if (company != null)
+            {
+                return Ok(company);
+            }
+            return BadRequest("Fail to update company");
+        }
     }
 }
