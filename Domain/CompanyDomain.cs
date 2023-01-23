@@ -62,7 +62,7 @@ namespace ms_partnership.Domain
 
         public IEnumerable<ReadCompanyDto> SearchAll()
         {
-            var lista = _context.Companies.ToList();
+            var lista = _context.Companies.Where(company => company.Active == true).ToList();
             IEnumerable<ReadCompanyDto> readCompanyDtos = _mapper.Map<List<ReadCompanyDto>>(lista);
             return readCompanyDtos;
         }
@@ -85,6 +85,24 @@ namespace ms_partnership.Domain
                         _amazonS3Service.DeleteAsync(company.LogoImg);
                 }
                 _mapper.Map(dto, company);
+                ReadCompanyDto companyDto = _mapper.Map<ReadCompanyDto>(company);
+                _context.SaveChanges();
+                return companyDto;
+            }
+            return null;
+        }
+
+        public ReadCompanyDto LogicalRemove(Guid id){
+            Company company = _context.Companies.FirstOrDefault(company => company.Id == id);
+            if(company != null)
+            {
+                if (company.LogoImg != null || company.LogoImg != ""){
+                    var response = _amazonS3Service.DeleteAsync(company.LogoImg);
+                    while (!response.IsCompleted){}
+                    if (!response.IsCompletedSuccessfully)
+                        company.LogoImg = "DELETE_ERROR";
+                }
+                company.Active = false;
                 ReadCompanyDto companyDto = _mapper.Map<ReadCompanyDto>(company);
                 _context.SaveChanges();
                 return companyDto;

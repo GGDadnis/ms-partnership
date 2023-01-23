@@ -9,7 +9,7 @@ namespace ms_partnership.Exceptions.PaginationExceptions
         {
             if (id <= 0)
             {
-                return Result.Fail("Página não é válida");
+                return Result.Fail("Page is not valid.");
             }
 
             return Result.Ok();
@@ -19,7 +19,7 @@ namespace ms_partnership.Exceptions.PaginationExceptions
         {
             if (id <= 0)
             {
-                return Result.Fail("Tamanho não é válido");
+                return Result.Fail("Size is not valid.");
             }
 
             return Result.Ok();

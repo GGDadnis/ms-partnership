@@ -74,20 +74,12 @@ namespace ms_partnership.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteCompany(Guid id)
         {
-            Result idResult = _interfaces.IdValidate(id);
-
-            if (idResult.IsFailed)
+            var company = _interfaces.LogicalRemove(id);
+            if (company != null)
             {
-                return BadRequest("Invalid company id");
+                return Ok(company);
             }
-
-            var company = _interfaces.Remove(id);
-            if (company != true)
-            {
-                return BadRequest("Fail to delete company");
-            }
-
-            return Ok("Company deleted with sucess");
+            return BadRequest("Fail to delete company");
         }
     }
 }
