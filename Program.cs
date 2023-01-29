@@ -1,4 +1,7 @@
+using System.ComponentModel;
 using System.Text;
+using Amazon.Runtime;
+using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +13,7 @@ using ms_partnership.Exceptions.InterfacesExceptions;
 using ms_partnership.Exceptions.PaginationExceptions;
 using ms_partnership.Interfaces;
 using ms_partnership.Interfaces.PaginationInterfaces;
-
+using ms_partnership.Service;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -111,6 +114,20 @@ builder.Services.AddSwaggerGen(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// Amazon S3 Configuration
+var awsOptions = builder.Configuration.GetAWSOptions();
+awsOptions.Credentials = new BasicAWSCredentials(
+    builder.Configuration["AWS:Key"],
+    builder.Configuration["AWS:Secret"]
+);
+awsOptions.Region = Amazon.RegionEndpoint.GetBySystemName(builder.Configuration["AWS:Region"]);
+builder.Services.AddDefaultAWSOptions(awsOptions);
+builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddTransient<AmazonS3Service>(provider => new AmazonS3Service(
+    provider.GetService<IAmazonS3>(),
+    builder.Configuration["AWS:Bucketname"]
+));
 
 var app = builder.Build();
 

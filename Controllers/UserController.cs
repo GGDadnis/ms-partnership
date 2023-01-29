@@ -20,11 +20,15 @@ namespace ms_partnership.Controllers
         public IActionResult CreateUser([FromBody] AddUserDto? dto)
         {
             var user = _interfaces.Add(dto);
-            if (user != null)
+            if (user == null)
             {
-                return Ok(user);
+                return BadRequest("Fail to create user");
             }
-            return BadRequest("Fail to create user");
+            if (user.AvatarImg == "SEND_ERROR")
+                return BadRequest("Fail to send S3 image");
+            if (user.AvatarImg == "CONVERTION_ERROR")
+                return BadRequest("S3 Image Unsupported Media Type");
+            return Ok(user);
         }
 
         [HttpGet]
@@ -62,6 +66,12 @@ namespace ms_partnership.Controllers
             {
                 return Ok(user);
             }
+            if (user.AvatarImg == "SEND_ERROR")
+                return BadRequest("Fail to send S3 image");
+            if (user.AvatarImg == "CONVERTION_ERROR")
+                return BadRequest("S3 Image Unsupported Media Type");
+            if (user.AvatarImg == "DELETE_ERROR")
+                return BadRequest("Fail to delete S3 image");
             return BadRequest("Fail to update user");
         }
 
@@ -75,14 +85,14 @@ namespace ms_partnership.Controllers
                 return BadRequest("Invalid user id");
             }
 
-            var user = _interfaces.Remove(id);
-            if (user != true)
+            var user = _interfaces.LogicalRemove(id);
+            if (user != null)
             {
-                return BadRequest("Fail to delete user");
+                if (user.AvatarImg == "DELETE_ERROR")
+                    return BadRequest("Fail to delete S3 image");
+                return Ok("User deleted with sucess");
             }
-
-            return Ok("User deleted with sucess");
+            return BadRequest("Fail to delete user");
         }
-        
     }
 }
