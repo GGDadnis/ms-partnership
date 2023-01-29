@@ -24,6 +24,10 @@ namespace ms_partnership.Controllers
             {
                 return BadRequest("Fail to create company");
             }
+            if (company.Category == null)
+            {
+                return NotFound("Fail to find category");
+            }
             if (company.LogoImg == "SEND_ERROR")
                 return BadRequest("Fail to send S3 image");
             if (company.LogoImg == "CONVERTION_ERROR")

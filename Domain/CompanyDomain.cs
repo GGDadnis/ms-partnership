@@ -24,9 +24,14 @@ namespace ms_partnership.Domain
 
         public ReadCompanyDto Add(AddCompanyDto dto)
         {
-            if (dto.LogoImg != null || dto.LogoImg != "")
+            if (!String.IsNullOrEmpty(dto.LogoImg))
                 dto.LogoImg = SendBase64ImageToS3(dto.LogoImg);
             Company company = _mapper.Map<Company>(dto);
+            Category category = _context.Categories.FirstOrDefault(category => category.Id == dto.CategoryId);
+            if (category == null){
+                company.Category = null;
+                return _mapper.Map<ReadCompanyDto>(company);
+            }
             if (!dto.LogoImg.Contains("ERROR")){
                 _context.Companies.Add(company);
                 _context.SaveChanges();
@@ -49,7 +54,7 @@ namespace ms_partnership.Domain
             Company company = _context.Companies.FirstOrDefault(company => company.Id == id);
             if (company != null)
             {
-                if (company.LogoImg != null || company.LogoImg != ""){
+                if (!String.IsNullOrEmpty(company.LogoImg)){
                     var response = _amazonS3Service.DeleteAsync(company.LogoImg);
                     while (!response.IsCompleted){}
                     if (!response.IsCompletedSuccessfully)
@@ -81,12 +86,15 @@ namespace ms_partnership.Domain
 
         public ReadCompanyDto Update(Guid id, UpdateCompanyDto dto)
         {
+            Category category = _context.Categories.FirstOrDefault(category => category.Id == dto.CategoryId);
+            if (category == null)
+                return null;
             Company company = _context.Companies.FirstOrDefault(company => company.Id == id);
             if(company != null)
             {
-                if (dto.LogoImg != null || dto.LogoImg != ""){
+                if (!String.IsNullOrEmpty(dto.LogoImg)){
                     dto.LogoImg = SendBase64ImageToS3(dto.LogoImg);
-                    if (company.LogoImg != null || company.LogoImg != "")
+                    if (!String.IsNullOrEmpty(company.LogoImg))
                         _amazonS3Service.DeleteAsync(company.LogoImg);
                 }
                 _mapper.Map(dto, company);
@@ -102,7 +110,7 @@ namespace ms_partnership.Domain
             Company company = _context.Companies.FirstOrDefault(company => company.Id == id);
             if(company != null)
             {
-                if (company.LogoImg != null || company.LogoImg != ""){
+                if (!String.IsNullOrEmpty(company.LogoImg)){
                     var response = _amazonS3Service.DeleteAsync(company.LogoImg);
                     while (!response.IsCompleted){}
                     if (!response.IsCompletedSuccessfully)

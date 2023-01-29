@@ -23,7 +23,7 @@ namespace ms_partnership.Domain
         }
         public ReadUserDto Add(AddUserDto dto)
         {
-            if (dto.AvatarImg != null || dto.AvatarImg != "")
+            if (!String.IsNullOrEmpty(dto.AvatarImg))
                 dto.AvatarImg = SendBase64ImageToS3(dto.AvatarImg);
             var user = _mapper.Map<User>(dto);
             if (!dto.AvatarImg.Contains("ERROR")){
@@ -48,7 +48,7 @@ namespace ms_partnership.Domain
             User user = _context.Users.FirstOrDefault(user => user.Id == id);
             if (user != null)
             {
-                if (user.AvatarImg != null || user.AvatarImg != ""){
+                if (!String.IsNullOrEmpty(user.AvatarImg)){
                     var response = _amazonS3Service.DeleteAsync(user.AvatarImg);
                     while (!response.IsCompleted){}
                     if (!response.IsCompletedSuccessfully)
@@ -83,9 +83,9 @@ namespace ms_partnership.Domain
             User user = _context.Users.FirstOrDefault(user => user.Id == id);
             if(user != null)
             {
-                if (dto.AvatarImg != null || dto.AvatarImg != ""){
+                if (!String.IsNullOrEmpty(dto.AvatarImg)){
                     dto.AvatarImg = SendBase64ImageToS3(dto.AvatarImg);
-                    if (user.AvatarImg != null || user.AvatarImg != "")
+                    if (!String.IsNullOrEmpty(user.AvatarImg))
                         _amazonS3Service.DeleteAsync(user.AvatarImg);
                 }
                 _mapper.Map(dto, user);
@@ -102,7 +102,7 @@ namespace ms_partnership.Domain
             User user = _context.Users.FirstOrDefault(user => user.Id == id);
             if(user != null)
             {
-                if (user.AvatarImg != null || user.AvatarImg != ""){
+                if (!String.IsNullOrEmpty(user.AvatarImg)){
                     var response = _amazonS3Service.DeleteAsync(user.AvatarImg);
                     while (!response.IsCompleted){}
                     if (!response.IsCompletedSuccessfully)
