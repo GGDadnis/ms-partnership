@@ -88,9 +88,9 @@ namespace ms_partnership.Data
                 new Company { Id = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"), Name = "Weasleys’ Wizard Wheezes", Cnpj = "66.235.852/0001-76", LogoImg = "", TotalGrade = 40, CategoryId = new Guid("32885749-4cc2-4445-86f5-c2b310cc5c9f"), Active = true});
             
             Builder.Entity<User>().HasData(   
-                new User { Id = new Guid("ae0d5c55-7053-42be-a56d-e0a24cb2ecc9"), FirstName = "Admin", LastName = "Partnership", Cpf = "674.213.970-60", AvatarImg = ""},
-                new User { Id = new Guid("5e30cb9e-5e09-4d8c-84b6-33a4effb46bc"), FirstName = "Guilherme", LastName = "Gusman", Cpf = "772.445.270-98", AvatarImg = ""},
-                new User { Id = new Guid("0ae4a7a5-5314-4312-ba10-e074d32ed6b9"), FirstName = "Higor", LastName = "Nascimento", Cpf = "700.160.090-37", AvatarImg = ""});
+                new User { Id = new Guid("ae0d5c55-7053-42be-a56d-e0a24cb2ecc9"), FirstName = "Admin", LastName = "Partnership", Cpf = "674.213.970-60", AvatarImg = "", Active = true},
+                new User { Id = new Guid("5e30cb9e-5e09-4d8c-84b6-33a4effb46bc"), FirstName = "Guilherme", LastName = "Gusman", Cpf = "772.445.270-98", AvatarImg = "", Active = true},
+                new User { Id = new Guid("0ae4a7a5-5314-4312-ba10-e074d32ed6b9"), FirstName = "Higor", LastName = "Nascimento", Cpf = "700.160.090-37", AvatarImg = "", Active = true});
 
             Builder.Entity<Login>().HasData(   
                 new Login { Id = new Guid("36865be7-1394-49c6-9b32-3c7c4ac13504"), Email = "admin@partnership.com", Password = "admin", Role = "Admin", Professional = false},

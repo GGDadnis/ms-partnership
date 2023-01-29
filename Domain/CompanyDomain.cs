@@ -27,8 +27,10 @@ namespace ms_partnership.Domain
             if (dto.LogoImg != null || dto.LogoImg != "")
                 dto.LogoImg = SendBase64ImageToS3(dto.LogoImg);
             Company company = _mapper.Map<Company>(dto);
-            _context.Companies.Add(company);
-            _context.SaveChanges();
+            if (!dto.LogoImg.Contains("ERROR")){
+                _context.Companies.Add(company);
+                _context.SaveChanges();
+            }
             ReadCompanyDto companyDto = _mapper.Map<ReadCompanyDto>(company);
             return companyDto;
         }
@@ -53,9 +55,12 @@ namespace ms_partnership.Domain
                     if (!response.IsCompletedSuccessfully)
                         company.LogoImg = "DELETE_ERROR";
                 }
-                _context.Remove(company);
-                _context.SaveChanges();
-                return true;
+                if (!company.LogoImg.Contains("ERROR")){
+                    _context.Remove(company);
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             return false;
         }
@@ -86,7 +91,8 @@ namespace ms_partnership.Domain
                 }
                 _mapper.Map(dto, company);
                 ReadCompanyDto companyDto = _mapper.Map<ReadCompanyDto>(company);
-                _context.SaveChanges();
+                if (!dto.LogoImg.Contains("ERROR"))
+                    _context.SaveChanges();
                 return companyDto;
             }
             return null;
@@ -101,10 +107,13 @@ namespace ms_partnership.Domain
                     while (!response.IsCompleted){}
                     if (!response.IsCompletedSuccessfully)
                         company.LogoImg = "DELETE_ERROR";
+                    else
+                        company.LogoImg = "DELETED";
                 }
                 company.Active = false;
                 ReadCompanyDto companyDto = _mapper.Map<ReadCompanyDto>(company);
-                _context.SaveChanges();
+                if (!company.LogoImg.Contains("ERROR"))
+                    _context.SaveChanges();
                 return companyDto;
             }
             return null;
@@ -112,9 +121,12 @@ namespace ms_partnership.Domain
 
         private string SendBase64ImageToS3(string base64Image){
             // Converter imagem base64
-            var contentBase64 = base64Image.Substring(base64Image.LastIndexOf(',') + 1);
-            byte[] bytes = Convert.FromBase64String(contentBase64);
-            Stream filestream = new MemoryStream(bytes);
+            Stream filestream;
+            try{
+                filestream = ConvertBase64Image(base64Image);
+            }catch{
+                return "CONVERTION_ERROR";
+            }
             // Obter o formato da imagem original
             int length = base64Image.LastIndexOf(';') - base64Image.LastIndexOf("image/") - 6;
             var formatoImagem = base64Image.Substring(base64Image.LastIndexOf("image/") + 6, length);
@@ -127,5 +139,12 @@ namespace ms_partnership.Domain
                 return response.Result;
             return "SEND_ERROR";
         }
+
+         private Stream ConvertBase64Image(string base64Image){
+            var contentBase64 = base64Image.Substring(base64Image.LastIndexOf(',') + 1);
+            byte[] bytes = Convert.FromBase64String(contentBase64);
+            Stream filestream = new MemoryStream(bytes);
+            return filestream;
+         }
     }
 }

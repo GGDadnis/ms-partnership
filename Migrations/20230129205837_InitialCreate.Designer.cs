@@ -12,7 +12,7 @@ using ms_partnership.Data;
 namespace mspartnership.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230123072850_InitialCreate")]
+    [Migration("20230129205837_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -84,7 +84,7 @@ namespace mspartnership.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7ea7ad35-9fe6-4a83-bcfb-c5db095e35f7"),
+                            Id = new Guid("ca365168-dccf-4c4f-a497-38ee1ef439ae"),
                             Bairro = "Boa Vista de São Caetano",
                             Cep = "40385640",
                             Complemento = "",
@@ -95,7 +95,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("879245c1-5b2f-4c19-b650-e7d0add07d9f"),
+                            Id = new Guid("34351e1b-fe21-4829-87ee-9d8d9367025c"),
                             Bairro = "Santo Antônio I",
                             Cep = "35430505",
                             Complemento = "",
@@ -106,7 +106,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5f5f0681-f8fe-473e-b583-2d8f1d126bd0"),
+                            Id = new Guid("de715ec7-d1b4-4a4d-8bd0-04c2a215b8a0"),
                             Bairro = "Mooca",
                             Cep = "03162160",
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
@@ -117,7 +117,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4091ec5e-07a4-40a2-aa5d-1a908f7e28a1"),
+                            Id = new Guid("9196194e-e4ea-4c41-af9d-8d85fb8c9849"),
                             Bairro = "Centro",
                             Cep = "20080020",
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
@@ -128,7 +128,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1e0fdb04-96df-4663-8f39-01acf2d987a6"),
+                            Id = new Guid("ff5a7cc0-a5ce-42e7-a2b5-327253e15fd6"),
                             Bairro = "Diagon Alley",
                             Cep = "North Side",
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
@@ -139,7 +139,7 @@ namespace mspartnership.Migrations
                         },
                         new
                         {
-                            Id = new Guid("556b8882-4bb1-4ad4-8e2f-a149dbdfd1ee"),
+                            Id = new Guid("87ecd9d1-43ec-4b53-aa5c-ffba2ce56162"),
                             Bairro = "Diagon Alley",
                             Cep = "North Side",
                             CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"),
@@ -456,40 +456,40 @@ namespace mspartnership.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e889fb90-eb42-44ad-abbf-34f326971162"),
+                            Id = new Guid("fe9a1dc3-019b-4d43-96f9-a7ea5c9ea347"),
                             CompanyId = new Guid("80d66e15-8c2c-4420-a0ef-5d40d050d52c"),
                             Condition = false,
-                            Created = new DateTime(2023, 1, 23, 7, 28, 50, 831, DateTimeKind.Utc).AddTicks(7983),
+                            Created = new DateTime(2023, 1, 29, 20, 58, 37, 829, DateTimeKind.Utc).AddTicks(462),
                             Discount = 0.0,
                             DiscountDescription = "We're to good to give discount"
                         },
                         new
                         {
-                            Id = new Guid("51551f20-a514-46cb-932c-82de824be4e5"),
+                            Id = new Guid("ac70920a-9a89-46b5-b48d-92f4989327b9"),
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
                             Condition = true,
-                            Created = new DateTime(2023, 1, 23, 7, 28, 50, 831, DateTimeKind.Utc).AddTicks(7986),
+                            Created = new DateTime(2023, 1, 29, 20, 58, 37, 829, DateTimeKind.Utc).AddTicks(477),
                             Discount = 50.0,
                             DiscountDescription = "HOT DEAL: Firebolt at 50% OFF",
-                            EndDate = new DateTime(2023, 1, 28, 7, 28, 50, 831, DateTimeKind.Utc).AddTicks(7989),
-                            StartDate = new DateTime(2023, 1, 23, 7, 28, 50, 831, DateTimeKind.Utc).AddTicks(7986)
+                            EndDate = new DateTime(2023, 2, 3, 20, 58, 37, 829, DateTimeKind.Utc).AddTicks(480),
+                            StartDate = new DateTime(2023, 1, 29, 20, 58, 37, 829, DateTimeKind.Utc).AddTicks(478)
                         },
                         new
                         {
-                            Id = new Guid("6a56057a-f6ea-492e-8dfd-3d69f6244004"),
+                            Id = new Guid("8a291df7-c7d8-4b17-9cee-dfd286198b4c"),
                             CompanyId = new Guid("43b478b0-8667-4c05-a905-dcb00b7cd976"),
                             Condition = false,
-                            Created = new DateTime(2023, 1, 23, 7, 28, 50, 831, DateTimeKind.Utc).AddTicks(7997),
+                            Created = new DateTime(2023, 1, 29, 20, 58, 37, 829, DateTimeKind.Utc).AddTicks(488),
                             Discount = 10.0,
                             DiscountDescription = "Everything with 10% OFF",
-                            StartDate = new DateTime(2023, 1, 28, 7, 28, 50, 831, DateTimeKind.Utc).AddTicks(7997)
+                            StartDate = new DateTime(2023, 2, 3, 20, 58, 37, 829, DateTimeKind.Utc).AddTicks(488)
                         },
                         new
                         {
-                            Id = new Guid("a6edec7b-c43a-4796-b85e-6c083e084ff1"),
+                            Id = new Guid("6d1f6012-e324-4d82-8451-2c065c4ab57c"),
                             CompanyId = new Guid("f7418b55-cca4-4f03-badc-cf194f82b57c"),
                             Condition = true,
-                            Created = new DateTime(2023, 1, 23, 7, 28, 50, 831, DateTimeKind.Utc).AddTicks(7999),
+                            Created = new DateTime(2023, 1, 29, 20, 58, 37, 829, DateTimeKind.Utc).AddTicks(490),
                             Discount = 30.0,
                             DiscountDescription = "Everyone seeking happiness"
                         });
@@ -538,6 +538,10 @@ namespace mspartnership.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean")
+                        .HasColumnName("active");
+
                     b.Property<string>("AvatarImg")
                         .HasColumnType("text")
                         .HasColumnName("avatar_img");
@@ -565,6 +569,7 @@ namespace mspartnership.Migrations
                         new
                         {
                             Id = new Guid("ae0d5c55-7053-42be-a56d-e0a24cb2ecc9"),
+                            Active = true,
                             AvatarImg = "",
                             Cpf = "674.213.970-60",
                             FirstName = "Admin",
@@ -573,6 +578,7 @@ namespace mspartnership.Migrations
                         new
                         {
                             Id = new Guid("5e30cb9e-5e09-4d8c-84b6-33a4effb46bc"),
+                            Active = true,
                             AvatarImg = "",
                             Cpf = "772.445.270-98",
                             FirstName = "Guilherme",
@@ -581,6 +587,7 @@ namespace mspartnership.Migrations
                         new
                         {
                             Id = new Guid("0ae4a7a5-5314-4312-ba10-e074d32ed6b9"),
+                            Active = true,
                             AvatarImg = "",
                             Cpf = "700.160.090-37",
                             FirstName = "Higor",

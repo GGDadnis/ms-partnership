@@ -25,9 +25,11 @@ namespace ms_partnership.Domain
         {
             if (dto.AvatarImg != null || dto.AvatarImg != "")
                 dto.AvatarImg = SendBase64ImageToS3(dto.AvatarImg);
-            User user = _mapper.Map<User>(dto);
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            var user = _mapper.Map<User>(dto);
+            if (!dto.AvatarImg.Contains("ERROR")){
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
             ReadUserDto userDto = _mapper.Map<ReadUserDto>(user);
             return userDto;
         }
@@ -52,16 +54,19 @@ namespace ms_partnership.Domain
                     if (!response.IsCompletedSuccessfully)
                         user.AvatarImg = "DELETE_ERROR";
                 }
-                _context.Remove(user);
-                _context.SaveChanges();
-                return true;
+                if (!user.AvatarImg.Contains("ERROR")){
+                    _context.Remove(user);
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             return false;
         }
 
         public IEnumerable<ReadUserDto> SearchAll()
         {
-            var lista = _context.Users.ToList();
+            var lista = _context.Users.Where(user => user.Active == true).ToList();
             IEnumerable<ReadUserDto> readUserDtos = _mapper.Map<List<ReadUserDto>>(lista);
             return readUserDtos;
         }
@@ -85,7 +90,30 @@ namespace ms_partnership.Domain
                 }
                 _mapper.Map(dto, user);
                 ReadUserDto userDto = _mapper.Map<ReadUserDto>(user);
-                _context.SaveChanges();
+                if (!dto.AvatarImg.Contains("ERROR"))
+                    _context.SaveChanges();
+                return userDto;
+            }
+            return null;
+        }
+
+        public ReadUserDto LogicalRemove(Guid id)
+        {
+            User user = _context.Users.FirstOrDefault(user => user.Id == id);
+            if(user != null)
+            {
+                if (user.AvatarImg != null || user.AvatarImg != ""){
+                    var response = _amazonS3Service.DeleteAsync(user.AvatarImg);
+                    while (!response.IsCompleted){}
+                    if (!response.IsCompletedSuccessfully)
+                        user.AvatarImg = "DELETE_ERROR";
+                    else
+                        user.AvatarImg = "DELETED";
+                }
+                user.Active = false;
+                ReadUserDto userDto = _mapper.Map<ReadUserDto>(user);
+                if (!user.AvatarImg.Contains("ERROR"))
+                    _context.SaveChanges();
                 return userDto;
             }
             return null;
@@ -93,9 +121,12 @@ namespace ms_partnership.Domain
 
         private string SendBase64ImageToS3(string base64Image){
             // Converter imagem base64
-            var contentBase64 = base64Image.Substring(base64Image.LastIndexOf(',') + 1);
-            byte[] bytes = Convert.FromBase64String(contentBase64);
-            Stream filestream = new MemoryStream(bytes);
+            Stream filestream;
+            try{
+                filestream = ConvertBase64Image(base64Image);
+            }catch{
+                return "CONVERTION_ERROR";
+            }
             // Obter o formato da imagem original
             int length = base64Image.LastIndexOf(';') - base64Image.LastIndexOf("image/") - 6;
             var formatoImagem = base64Image.Substring(base64Image.LastIndexOf("image/") + 6, length);
@@ -107,6 +138,13 @@ namespace ms_partnership.Domain
             if (response.IsCompletedSuccessfully)
                 return response.Result;
             return "SEND_ERROR";
+        }
+
+         private Stream ConvertBase64Image(string base64Image){
+            var contentBase64 = base64Image.Substring(base64Image.LastIndexOf(',') + 1);
+            byte[] bytes = Convert.FromBase64String(contentBase64);
+            Stream filestream = new MemoryStream(bytes);
+            return filestream;
         }
     }
 }
