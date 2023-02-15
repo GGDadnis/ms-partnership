@@ -38,13 +38,26 @@ namespace ms_partnership.Domain
         {
             ResponseViaCep responseCep = await _serviceCep.buscarCep(dto.Cep);
 
-            responseCep.Complemento = dto.Complemento;
+            // responseCep.Complemento = dto.Complemento;
 
             if (responseCep != null)
             {
-                Address address = _mapper.Map<Address>(responseCep);
+                // Address address = _mapper.Map<Address>(responseCep);
 
-                _context.Address.Add(address);
+                Address address = new Address()
+                {
+
+                    UserId = dto.UserId,
+                    CompanyId = dto.CompanyId,
+                    Logradouro = responseCep.Logradouro,
+                    Cep = responseCep.Cep,
+                    Localidade = responseCep.Localidade,
+                    Uf = responseCep.Uf,
+                    Bairro = responseCep.Bairro,
+                    Complemento = dto.Complemento,
+                };
+
+                _context.Addresses.Add(address);
                 _context.SaveChanges();
 
                 ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
@@ -57,27 +70,51 @@ namespace ms_partnership.Domain
 
         public Result IdValidate(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                return Result.Fail("");
+            }
+
+            return Result.Ok();
         }
 
         public bool Remove(Guid id)
         {
-            throw new NotImplementedException();
+            Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
+            if (address != null)
+            {
+                _context.Remove(address);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public IEnumerable<ReadAddressDto> SearchAll()
         {
-            throw new NotImplementedException();
+            var lista = _context.Addresses.ToList();
+            IEnumerable<ReadAddressDto> readAddressDtos = _mapper.Map<List<ReadAddressDto>>(lista);
+            return readAddressDtos;
         }
 
         public ReadAddressDto SearchById(Guid id)
         {
-            throw new NotImplementedException();
+            Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
+            ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
+            return addressDto;
         }
 
-        public ReadAddressDto Update(Guid id, UpdateAddressDto obj)
+        public ReadAddressDto Update(Guid id, UpdateAddressDto dto)
         {
-            throw new NotImplementedException();
+            Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
+            if (address != null)
+            {
+                _mapper.Map(dto, address);
+                ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
+                _context.SaveChanges();
+                return addressDto;
+            }
+            return null;
         }
     }
 }

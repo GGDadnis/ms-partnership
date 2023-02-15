@@ -1,5 +1,7 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ms_partnership.Models.Entities
 {
@@ -22,10 +24,24 @@ namespace ms_partnership.Models.Entities
         [Column("discount_description")]
         public string? DiscountDescription { get; set; }
 
+        [Column("created")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+
         [Column("start_date")]
-        public DateTime? StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DefaultValue(null)]
+        public DateTime? StartDate { get; set; } = null;
 
         [Column("end_date")]
-        public DateTime? EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DefaultValue(null)]
+        public DateTime? EndDate { get; set; } = null;
+
+        [Column("company_id")]
+        public Guid CompanyId { get; set; }
+
+        [JsonIgnore]
+        public virtual Company Company { get; set; }
     }
 }

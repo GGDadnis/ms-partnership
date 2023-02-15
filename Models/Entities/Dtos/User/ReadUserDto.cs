@@ -23,5 +23,12 @@ namespace ms_partnership.Models.Entities.Dtos.User
 
         [Column("avatar_img")]
         public string? AvatarImg { get; set; }
+
+        [Column("active")]
+        public bool Active { get; set; }
+
+        public virtual Models.Entities.Address? Address { get; set; }
+        public virtual Models.Entities.Login Login { get; set; }
+        public virtual List<Models.Entities.Review>? Reviews { get; set; }
     }
 }

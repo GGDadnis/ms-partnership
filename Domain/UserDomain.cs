@@ -4,6 +4,7 @@ using ms_partnership.Data;
 using ms_partnership.Interfaces;
 using ms_partnership.Models.Entities;
 using ms_partnership.Models.Entities.Dtos.User;
+using ms_partnership.Service;
 
 namespace ms_partnership.Domain
 {
@@ -11,17 +12,24 @@ namespace ms_partnership.Domain
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly AmazonS3Service _amazonS3Service;
 
-        public UserDomain(AppDbContext context, IMapper mapper)
+
+        public UserDomain(AppDbContext context, IMapper mapper, AmazonS3Service amazonS3Service)
         {
             _context = context;
             _mapper = mapper;
+            _amazonS3Service = amazonS3Service;
         }
         public ReadUserDto Add(AddUserDto dto)
         {
-            User user = _mapper.Map<User>(dto);
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            if (dto.AvatarImg != null || dto.AvatarImg != "")
+                dto.AvatarImg = SendBase64ImageToS3(dto.AvatarImg);
+            var user = _mapper.Map<User>(dto);
+            if (!dto.AvatarImg.Contains("ERROR")){
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
             ReadUserDto userDto = _mapper.Map<ReadUserDto>(user);
             return userDto;
         }
@@ -40,16 +48,25 @@ namespace ms_partnership.Domain
             User user = _context.Users.FirstOrDefault(user => user.Id == id);
             if (user != null)
             {
-                _context.Remove(user);
-                _context.SaveChanges();
-                return true;
+                if (user.AvatarImg != null || user.AvatarImg != ""){
+                    var response = _amazonS3Service.DeleteAsync(user.AvatarImg);
+                    while (!response.IsCompleted){}
+                    if (!response.IsCompletedSuccessfully)
+                        user.AvatarImg = "DELETE_ERROR";
+                }
+                if (!user.AvatarImg.Contains("ERROR")){
+                    _context.Remove(user);
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             return false;
         }
 
         public IEnumerable<ReadUserDto> SearchAll()
         {
-            var lista = _context.Users.ToList();
+            var lista = _context.Users.Where(user => user.Active == true).ToList();
             IEnumerable<ReadUserDto> readUserDtos = _mapper.Map<List<ReadUserDto>>(lista);
             return readUserDtos;
         }
@@ -66,12 +83,68 @@ namespace ms_partnership.Domain
             User user = _context.Users.FirstOrDefault(user => user.Id == id);
             if(user != null)
             {
+                if (dto.AvatarImg != null || dto.AvatarImg != ""){
+                    dto.AvatarImg = SendBase64ImageToS3(dto.AvatarImg);
+                    if (user.AvatarImg != null || user.AvatarImg != "")
+                        _amazonS3Service.DeleteAsync(user.AvatarImg);
+                }
                 _mapper.Map(dto, user);
                 ReadUserDto userDto = _mapper.Map<ReadUserDto>(user);
-                _context.SaveChanges();
+                if (!dto.AvatarImg.Contains("ERROR"))
+                    _context.SaveChanges();
                 return userDto;
             }
             return null;
+        }
+
+        public ReadUserDto LogicalRemove(Guid id)
+        {
+            User user = _context.Users.FirstOrDefault(user => user.Id == id);
+            if(user != null)
+            {
+                if (user.AvatarImg != null || user.AvatarImg != ""){
+                    var response = _amazonS3Service.DeleteAsync(user.AvatarImg);
+                    while (!response.IsCompleted){}
+                    if (!response.IsCompletedSuccessfully)
+                        user.AvatarImg = "DELETE_ERROR";
+                    else
+                        user.AvatarImg = "DELETED";
+                }
+                user.Active = false;
+                ReadUserDto userDto = _mapper.Map<ReadUserDto>(user);
+                if (!user.AvatarImg.Contains("ERROR"))
+                    _context.SaveChanges();
+                return userDto;
+            }
+            return null;
+        }
+
+        private string SendBase64ImageToS3(string base64Image){
+            // Converter imagem base64
+            Stream filestream;
+            try{
+                filestream = ConvertBase64Image(base64Image);
+            }catch{
+                return "CONVERTION_ERROR";
+            }
+            // Obter o formato da imagem original
+            int length = base64Image.LastIndexOf(';') - base64Image.LastIndexOf("image/") - 6;
+            var formatoImagem = base64Image.Substring(base64Image.LastIndexOf("image/") + 6, length);
+            // Gerar um nome do arquivo a partir de um Guid
+            var key = Guid.NewGuid().ToString() + '.' + formatoImagem;
+            // Enviar imagem para a S3 e aguardar a resposta
+            var response = _amazonS3Service.SendAsync(filestream, key);
+            while (!response.IsCompleted){}
+            if (response.IsCompletedSuccessfully)
+                return response.Result;
+            return "SEND_ERROR";
+        }
+
+         private Stream ConvertBase64Image(string base64Image){
+            var contentBase64 = base64Image.Substring(base64Image.LastIndexOf(',') + 1);
+            byte[] bytes = Convert.FromBase64String(contentBase64);
+            Stream filestream = new MemoryStream(bytes);
+            return filestream;
         }
     }
 }

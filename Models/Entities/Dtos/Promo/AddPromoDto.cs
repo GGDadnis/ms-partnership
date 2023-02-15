@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -21,9 +22,16 @@ namespace ms_partnership.Models.Entities.Dtos.Promo
         public string? DiscountDescription { get; set; }
 
         [Column("start_date")]
-        public DateTime? StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DefaultValue(null)]
+        public DateTime? StartDate { get; set; } = null;
 
         [Column("end_date")]
-        public DateTime? EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DefaultValue(null)]
+        public DateTime? EndDate { get; set; } = null;
+
+        [Column("company_id")]
+        public Guid CompanyId { get; set; }
     }
 }
