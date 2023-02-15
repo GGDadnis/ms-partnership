@@ -73,5 +73,13 @@ namespace ms_partnership.Domain
             }
             return null;
         }
+
+        public IEnumerable<ReadReviewDto> SearchReviewByCompany(Guid id)
+        {
+            var lista = _context.Reviews.FirstOrDefault(review => review.CompanyId == id);
+            IEnumerable<ReadReviewDto> readReviewsDtos = _mapper.Map<List<ReadReviewDto>>(lista);
+
+            return readReviewsDtos;
+        }
     }
 }

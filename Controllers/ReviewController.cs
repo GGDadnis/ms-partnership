@@ -1,8 +1,10 @@
+using System.Text;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using ms_partnership.Exceptions.InterfacesExceptions;
 using ms_partnership.Interfaces;
 using ms_partnership.Models.Entities.Dtos.Review;
+using Newtonsoft.Json;
 
 namespace ms_partnership.Controllers
 {
@@ -98,6 +100,17 @@ namespace ms_partnership.Controllers
             }
 
             return Ok("Review deleted with sucess");
+        }
+
+        [HttpGet("DownloadJsonReview/{companyId}")]
+        public IActionResult SearchReviewByCompany(Guid companyId)
+        {
+            var company = _interfaces.SearchReviewByCompany(companyId);
+
+            var serializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+
+            var jsonString = JsonConvert.SerializeObject(company, Formatting.Indented, serializerSettings);
+            return File(Encoding.UTF8.GetBytes(jsonString), "application/json", "review.json");
         }
     }
 }
