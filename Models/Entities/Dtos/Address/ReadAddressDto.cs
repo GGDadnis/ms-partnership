@@ -10,39 +10,16 @@ namespace ms_partnership.Models.Entities.Dtos.Address
 {
     public class ReadAddressDto
     {
-        [Column("id")]
         public Guid Id { get; set; }
-
-        [Column("cep")]
         public string Cep { get; set; }
-
-        [Column("logradouro")]
         public string Logradouro { get; set; }
-
-
-        [Column("bairro")]
         public string Bairro { get; set; }
-
-        [Column("localidade")]
         public string Localidade { get; set; }
-
-        [Column("uf")]
         public string Uf { get; set; }
-
-        [Column("complemento")]
         public string Complemento { get; set; }
-
-        [Column("company_id")]
-        [DefaultValue(null)]
         public Guid? CompanyId { get; set; } = null;
-
-        [Column("user_id")]
         public Guid? UserId { get; set; }
-
-        [JsonIgnore]
         public virtual Models.Entities.Company? Company { get; set; }
-
-        [JsonIgnore]
         public virtual Models.Entities.User? User { get; set; }
     }
 }

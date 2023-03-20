@@ -9,8 +9,6 @@ namespace ms_partnership.Models.Entities.Dtos.Category
 {
     public class UpdateCategoryDto
     {
-        [Required(ErrorMessage = "The field Name is required")]
-        [Column("name")]
         public string Name { get; set; }
     }
 }

@@ -9,10 +9,7 @@ namespace ms_partnership.Models.Entities.Dtos.Category
 {
     public class ReadCategoryDto
     {
-        [Column("id")]
         public Guid Id { get; set; }
-
-        [Column("name")]
         public string Name { get; set; }
 
         [JsonIgnore]
